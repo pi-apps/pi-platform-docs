@@ -18,7 +18,7 @@ After they're created, payments go through 3 major phases:
 3. Server-Side Completion
 
 
-![Payment flow](./img/payment_flow.jpg)
+![Payment flow](./img/payment_flow.png)
 
 **Phase I - Payment creation and Server-Side Approval**
 
