@@ -24,7 +24,7 @@ After they're created, payments go through 3 major phases:
 
 1. `createPayment`: Your app's frontend creates the payment. The Payment Flow UI opens, but cannot be interacted with until the payment is approved by your server.
 
-2. `onPaymentIdReceived`: The JS SDK has obtained the payment identifier (PaymentID) and is passing it to your app for Server-Side approval.
+2. `onReadyForServerApproval`: The JS SDK has obtained the payment identifier (PaymentID) and is passing it to your app for Server-Side approval.
 
 3. Your app's frontend sends the PaymentID to your app's server. This implementation is your responsibility.
 
@@ -45,7 +45,7 @@ app is visible again.
 
 **Phase III - Server-Side Completion**
 
-5. `onTransactionSubmitted`: The JS SDK passes the blockchain transaction identifier (TxID) to your app's frontend. You need this value for the Server-Side Completion flow.
+5. `onReadyForServerCompletion`: The JS SDK passes the blockchain transaction identifier (TxID) to your app's frontend. You need this value for the Server-Side Completion flow.
 
 6. Your app's frontend sends the TxID to your app's server. This implementation is your responsibility.
 

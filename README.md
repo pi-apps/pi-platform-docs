@@ -28,11 +28,11 @@ their consent to share their data with your app.
 
 ```javascript
 // Identify the user with their username / unique network-wide ID, and get permission to request payments from them.
-const scopes = ['username', 'payments'];
-function onOpenPaymentFound(payment) { /* ... */ }; // Read more about this in the SDK reference
+const scopes = ['payments'];
+function onIncompletePaymentFound(payment) { /* ... */ }; // Read more about this in the SDK reference
 
-Pi.authenticate(scopes, onOpenPaymentFound).then(function(auth) {
-  console.log(`Hello ${auth.user.username}. Your unique ID is ${auth.user.pi_id}`);
+Pi.authenticate(scopes, onIncompletePaymentFound).then(function(auth) {
+  console.log(`Hi there! You're ready to make payments!`);
 }).catch(function(error) {
   console.error(error);
 });
@@ -48,14 +48,18 @@ transaction and submit it to the Pi blockchain.
 ```javascript
 
 const payment = Pi.createPayment({
-  amount: 3.14, // Amount of π to be paid
-  reason: "Please pay for your order #1234", // User-facing explanation of the payment
-  metadata: { orderId: 1234, itemIds: [11, 42, 314] }, // Developer-facing metadata
-}, { // Read more about those callbacks in the details docs linked below.
-  onPaymentIdReceived: onPaymentIdReceived,
-  onTransactionSubmitted: onTransactionSubmitted,
-  onPaymentCancelled: onPaymentCancelled,
-  onPaymentError: onPaymentError,
+  // Amount of π to be paid:
+  amount: 3.14,
+  // An explanation of the payment - will be shown to the user:
+  memo: "...", // e.g: "Digital kitten #1234",
+  // An arbitrary developer-provided metadata object - for your own usage:
+  metadata: { /* ... */ }, // e.g: { kittenId: 1234 }
+}, {
+  // Callbacks you need to implement - read more about those in the detailed docs linked below:
+  onReadyForServerApproval: function(paymentId) { /* ... */ },
+  onReadyForServerCompletion: function(paymentId, txid) { /* ... */ },
+  onCancel: function(paymentId) { /* ... */ },
+  onError: function(error, payment) { /* ... */ },
 });
 
 ```

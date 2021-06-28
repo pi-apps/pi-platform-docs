@@ -60,17 +60,18 @@ Do not create payments using the Platform API. Use the client-side Javascript SD
 
 #### Get a payment:
 
+Get information about a payment.
+
 ```
 GET /payments/:payment_id
 ```
 
-* Authorization method: **User access token**
+* Authorization method: **Server API Key**
 * Response type: [PaymentDTO](#PaymentDTO)
 
-> **Coming soon:** Server API Key Authorization on this endpoint, to remove the need from passing the user's access token
-> to your server.
-
 #### Approve a payment:
+
+Server-side approval: mark a payment as approved, enabling the user to submit the transaction to the blockchain.
 
 ```
 POST /payments/:payment_id/approve
@@ -81,12 +82,24 @@ POST /payments/:payment_id/approve
 
 #### Complete a payment:
 
+Server-side completion: mark a payment as completed by proving to the Pi Servers that your app has obtained the
+payment's txid, enabling the user to close the payment flow.
+
 ```
 POST /payments/:payment_id/complete
 ```
 
+
 * Authorization method: **Server API Key**
 * Response type: [PaymentDTO](#PaymentDTO)
+
+Example request body:
+
+```
+{
+  "txid": "7a7ed20d3d72c365b9019baf8dc4c4e3cce4c08114d866e47ae157e3a796e9e7"
+}
+```
 
 ## Resource types
 
@@ -98,7 +111,7 @@ POST /payments/:payment_id/complete
   "identifier": string, // The payment identifier
   "user_uid": string, // The user's app-specific ID
   "amount": number, // The payment amount
-  "reason": string, // A string provided by the developer, shown to the user
+  "memo": string, // A string provided by the developer, shown to the user
   "metadata": Object, // An object provided by the developer for their own usage
   "to_address": string, // The recipient address of the blockchain transaction
   "created_at": string, // The payment's creation timestamp

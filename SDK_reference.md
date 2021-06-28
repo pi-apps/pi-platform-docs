@@ -3,17 +3,16 @@
 ## Authentication
 
 ```typescript
-Pi.authenticate(scopes: Array<string>, onIncompletePaymentFound: Function<PaymentDTO>): Promise<PiAuth>
+Pi.authenticate(scopes: Array<string>, onIncompletePaymentFound: Function<PaymentDTO>): Promise<AuthResult>
 ```
 
 Return value:
 
 ```typescript
-type AuthResult {
+type AuthResult = {
   accessToken: string,
   user: {
     uid: string,
-    pi_id: string,
     username: string
   }
 }
@@ -21,29 +20,37 @@ type AuthResult {
 
 ### `scopes`
 
+Available scopes: `username`, `payments`.
+
 > **Not yet implemented**
 >
-> Currently, all calls to the `authenticate` method will assume all scopes have been requested.
+> Currently, all calls to the `authenticate` method will assume all scopes have been requested - i.e all calls
+> are interpreted as though the first argument were `['username', 'payments']`.
+> However, you should implement your app by only adding the scopes you need when calling `authenticate`.
+> Scopes support will be added before the general release of the Pi platform.
 
-Here is a breakdown of various keys available on the `PiAuth['user']` object, and the scopes required for those keys
+Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
 to be present:
 
 | Field         | Description    | Required Scope  |
 | -------------: | ------------- | :-------------: |
 | `uid`      | An app-local identifier for the user. This is specific to this user, and this app. It will change if the user revokes the permissions they granted to your app. | (none) |
 | `username`   | The user's Pi username.      |   `username` |
-| `pi_id`  | A network-wide identifier for this user. This will stay the same across all apps used by this user.      |   `username` |
-
 
 ### `onIncompletePaymentFound`
 
 Signature: `(payment: PaymentDTO) => void`
 
-Every time the user is authenticated, and when they try to start a new payment flow, the SDK checks that there is no incomplete payment for this user. An incomplete payment, in this context, is a payment which has been submitted to the Pi blockchain, but where `status.developer_completed` is still `false` (i.e. the developer has not called the `/complete` endpoint on this payment).
+Every time the user is authenticated, and when they try to start a new payment flow, the SDK checks that there is no
+incomplete payment for this user. An incomplete payment, in this context, is a payment which has been submitted to
+the Pi blockchain, but where `status.developer_completed` is still `false` (i.e. the developer has not called the
+`/complete` endpoint on this payment).
 
 If an incomplete payment is found, this callback will be invoked with the payment's `PaymentDTO`.
 
-When this callback is invoked, it is your responsibility to complete the corresponding payment (you should most likely send the payment DTO to your server, and process it according to your business logic). You'll need to do so before you can request a new payment from the user.
+When this callback is invoked, it is your responsibility to complete the corresponding payment (you should most
+likely send the payment DTO to your server, and process it according to your business logic). You'll need to do
+so before you can request a new payment from the user.
 
 
 ## Payments
@@ -53,15 +60,15 @@ Create a new payment:
 ```typescript
 type PaymentData = {
   amount: number,
-  reason: string,
+  memo: string,
   metadata: Object,
 };
 
 type PaymentCallbacks = {
-  onPaymentIdReceived: (paymentId: string) => void,
-  onTransactionSubmitted: (paymentId: string, txid: string) => void,
-  onPaymentCancelled: (paymentId: string) => void,
-  onPaymentError: (error: Error, payment?: PaymentDTO) => void,
+  onReadyForServerApproval: (paymentId: string) => void,
+  onReadyForServerCompletion: (paymentId: string, txid: string) => void,
+  onCancel: (paymentId: string) => void,
+  onError: (error: Error, payment?: PaymentDTO) => void,
 };
 
 Pi.createPayment(paymentData: PaymentData, callbacks: PaymentCallbacks): void;
@@ -77,37 +84,38 @@ the payment and submit the blockchain transaction, or reject it.
 > When creating a new payment, if there is already an open payment with your app for the current user:
 > * If the user has not yet made the blockchain transaction, the open payment will be cancelled.
 > * If the user has already made the blockchain transaction, the new payment will be rejected
-> (`onPaymentError` will be called) and the `onOpenPaymentFound` method will be called with the
-> existing payment (use this callback to resolve the situation, e.g by completing the previous
-> payment from your backend).
+> (`onError` will be called) and the `onIncompletePaymentFound` callback that was passed to the `authenticate`
+> method will be called with the existing payment (use this callback to resolve the situation, e.g by sending
+> the previous payment to your server for server-side completion).
 
 
 
-## `paymentData` keys:
+### `paymentData` keys:
 
-### `amount`
+#### `amount`
 
 This is the amount that the user is requested to pay to your app.
 
 Example: `3.1415`.
 
-### `reason`
+#### `memo`
 
-The reason for this payment. This will be visible to the user.
+A memo for this payment. This will be visible to the user in the payment confirmation page.
+Use this to briefly explain what the user is paying for.
 
-Example: `Please pay for order #1234`.
+Example: `Digital kitten #1234`.
 
-### `metadata`
+#### `metadata`
 
-An arbitrary object that you can attach to this payment. This is for your own use, and it won't
-be shown to the user. You should use this object as a way to link this payment with your internal
+An arbitrary Javascript object that you can attach to this payment. This is for your own use.
+You should use this object as a way to link this payment with your internal
 business logic.
 
 Example: `{ orderId: 1234, itemIds: [11, 42, 314] }`
 
-## `callbacks` keys:
+### `callbacks` keys:
 
-### `onPaymentIdReceived`
+#### `onReadyForServerApproval`
 
 Signature: `(paymentId: string) => void`
 
@@ -117,7 +125,7 @@ Use this callback to send the paymentId to your backend for **Server-Side Approv
 Read more about Server-Side Approval and the full payment flow in the dedicated
 [Payments](payments.md) page.
 
-### `onTransactionSubmitted`
+#### `onReadyForServerCompletion`
 
 Signature: `(paymentId: string, txid: string) => void`
 
@@ -128,7 +136,7 @@ to your backend for **Server-Side Completion**.
 Read more about Server-Side Completion and the full payment flow in the dedicated
 [Payments](payments.md) page.
 
-### `onPaymentCancelled`
+#### `onCancel`
 
 Signature: `(paymentId: string) => void`
 
@@ -138,13 +146,47 @@ The payment may be cancelled either because the user manually rejected it, or be
 of some other blocking situation: the user doesn't have enough funds on their account
 to make the payment, another payment has been created concurrently...
 
-### `onPaymentError`
+#### `onError`
 
 Signature: `(error: Error, payment?: PaymentDTO) => void`
 
 This is called when an error occurs and the payment cannot be made. If the payment has been
 created, the second argument will be present and you may use it to investigate the error.
 Otherwise, only the first argument will be provided.
+
+
+### Type `PaymentDTO`
+
+This type is used in the arguments that are passed to `onIncompletePaymentFound` and `onError`.
+
+```typescript
+type PaymentDTO = {
+  // Payment data:
+  identifier: string, // The payment identifier
+  user_uid: string, // The user's app-specific ID
+  amount: number, // The payment amount
+  memo: string, // A string provided by the developer, shown to the user
+  metadata: Object, // An object provided by the developer for their own usage
+  to_address: string, // The recipient address of the blockchain transaction
+  created_at: string, // The payment's creation timestamp
+  
+  // Status flags representing the current state of this payment
+  status: {
+    developer_approved: boolean, // Server-Side Approval
+    transaction_verified: boolean, // Blockchain transaction verified
+    developer_completed: boolean, // Server-Side Completion
+    cancelled: boolean, // Cancelled by the developer or by Pi Network
+    user_cancelled: boolean, // Cancelled by the user
+  },
+  
+  // Blockchain transaction data:
+  transaction: null | { // This is null if no transaction has been made yet
+    txid: string, // The id of the blockchain transaction
+    verified: boolean, // True if the transaction matches the payment, false otherwise
+    _link: string, // A link to the operation on the Blockchain API
+  },
+}
+```
 
 
 ## Share dialog
