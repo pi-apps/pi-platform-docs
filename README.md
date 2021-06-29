@@ -10,10 +10,11 @@ This SDK is **not** for a server-side NodeJS app.
 
 ## Installation
 
-Add the following `script` tag to all pages where you need the SDK to be available:
+Add the following `script` tags to all pages where you need the SDK to be available:
 
 ```html
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<script>Pi.init({ version: "2.0" })</script>
 ```
 
 This will load the Pi Network JS SDK as a global `window.Pi` object.
