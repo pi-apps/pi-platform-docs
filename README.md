@@ -28,9 +28,11 @@ have successfully authenticated the user. The first time, they will be presented
 their consent to share their data with your app.
 
 ```javascript
-// Identify the user with their username / unique network-wide ID, and get permission to request payments from them.
+// Authenticate the user, and get permission to request payments from them:
 const scopes = ['payments'];
-function onIncompletePaymentFound(payment) { /* ... */ }; // Read more about this in the SDK reference
+
+// Read more about this callback in the SDK reference:
+function onIncompletePaymentFound(payment) { /* ... */ };
 
 Pi.authenticate(scopes, onIncompletePaymentFound).then(function(auth) {
   console.log(`Hi there! You're ready to make payments!`);
@@ -48,7 +50,7 @@ transaction and submit it to the Pi blockchain.
 
 ```javascript
 
-const payment = Pi.createPayment({
+Pi.createPayment({
   // Amount of π to be paid:
   amount: 3.14,
   // An explanation of the payment - will be shown to the user:
