@@ -62,7 +62,7 @@ Pi.createPayment({
   onReadyForServerApproval: function(paymentId) { /* ... */ },
   onReadyForServerCompletion: function(paymentId, txid) { /* ... */ },
   onCancel: function(paymentId) { /* ... */ },
-  onError: function(error, payment) { /* ... */ },
+  onError: function(error, Pi.createPayment) { /* ... */ },
 });
 
 ```
