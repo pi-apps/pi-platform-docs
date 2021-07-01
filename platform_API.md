@@ -63,7 +63,7 @@ Do not create payments using the Platform API. Use the client-side Javascript SD
 Get information about a payment.
 
 ```
-GET /payments/:payment_id
+GET /payments/{payment_id}
 ```
 
 * Authorization method: **Server API Key**
@@ -74,7 +74,7 @@ GET /payments/:payment_id
 Server-side approval: mark a payment as approved, enabling the user to submit the transaction to the blockchain.
 
 ```
-POST /payments/:payment_id/approve
+POST /payments/{payment_id}/approve
 ```
 
 * Authorization method: **Server API Key**
@@ -86,7 +86,7 @@ Server-side completion: mark a payment as completed by proving to the Pi Servers
 payment's txid, enabling the user to close the payment flow.
 
 ```
-POST /payments/:payment_id/complete
+POST /payments/{payment_id}/complete
 ```
 
 
