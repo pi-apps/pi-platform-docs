@@ -7,7 +7,6 @@ develop.pi in the Pi Browser to access the Developer Portal).
 
 This SDK is **not** for a server-side NodeJS app.
 
-
 ## Installation
 
 Add the following `script` tags to all pages where you need the SDK to be available:
