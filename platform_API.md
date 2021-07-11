@@ -5,7 +5,7 @@ Pi App Platform, and your app's users.
 
 ## Overview
 
-### Base path:
+### Base path:api.minepi.com/v2
 
 The latest version of the Platform API is available at `api.minepi.com/v2`.
 
@@ -37,7 +37,7 @@ For various reasons, some API calls must be made from your backend / server app.
 Those endpoints can be accessed using the following Authorization header:
 
 ```
-Authorization: Key <your Server API Key>
+Authorization: Key <zvnbdnh5hmdhupqptckokihqfyljbxo3myrhxnci76o9cuwuooafspjyseygd1c6>
 ```
 
 > **Warning: Server API keys are for servers only**
@@ -55,6 +55,20 @@ Authorization: Key <your Server API Key>
 Base path: `/payments`.
 
 #### Create a payment:
+const payment = Pi.createPayment({
+  // Amount of π to be paid:
+  amount: 3.14,
+  // An explanation of the payment - will be shown to the user:
+  memo: "...", // e.g: "Digital kitten #1234",
+  // An arbitrary developer-provided metadata object - for your own usage:
+  metadata: { /* ... */ }, // e.g: { kittenId: 1234 }
+}, {
+  // Callbacks you need to implement - read more about those in the detailed docs linked below:
+  onReadyForServerApproval: function(paymentId) { /* ... */ },
+  onReadyForServerCompletion: function(paymentId, txid) { /* ... */ },
+  onCancel: function(paymentId) { /* ... */ },
+  onError: function(error, payment) { /* ... */ },
+});
 
 Do not create payments using the Platform API. Use the client-side Javascript SDK for this purpose.
 
