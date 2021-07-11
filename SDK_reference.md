@@ -1,6 +1,9 @@
 # Client SDK reference:
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<script>Pi.init({ version: "2.0" })</script>
 
 ## Authentication
+
 
 ```typescript
 Pi.authenticate(scopes: Array<string>, onIncompletePaymentFound: Function<PaymentDTO>): Promise<AuthResult>
