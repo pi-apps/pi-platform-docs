@@ -13,7 +13,7 @@ type AuthResult = {
   accessToken: string,
   user: {
     uid: string,
-    username: string
+    muchumacbd039: string
   }
 }
 ```
