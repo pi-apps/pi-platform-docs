@@ -1,62 +1,89 @@
-name: 🚀 Feature request
+name:  🚀 Feature request
 description: Suggest an idea for this project
-labels: your_labels
+title: "[Feature]: "
+labels: [Feature, triage]
 assignees: your_username
-
----
-
 body:
-  # - type: markdown
-  #   attributes:
-  #     value: |
-  #       Some general tips:
-
-  #       - Is this really a problem?
-  #       - Is this a problem here?
-
-  - type: checkboxes
-    id: initial-checklist
-    attributes:
-      label: Initial checklist
-      options:
-        - label: I read the [support docs](https://github.com/pi-apps/.github/blob/main/support.md)
-          required: true
-        - label: I read the [contributing guide](https://github.com/pi-apps/.github/blob/main/contributing.md)
-          required: true
-        - label: I agree to follow the [code of conduct](https://github.com/pi-apps/.github/blob/main/code-of-conduct.md)
-          required: true
-        - label: I searched [issues](https://github.com/search?q=user%3Api-apps&type=Issues) and couldn’t find anything (or linked relevant results below)
-          required: true
-
-  - type: textarea
-    id: problem
-    attributes:
-      label: Problem
-      description: **Is your feature request related to a problem? Please describe.** A clear and concise description of what the problem is.
-      placeholder: Ex. I'm always frustrated when [...]
-    validations:
-      required: true
-
-  - type: textarea
-    id: solution
-    attributes:
-      label: Solution
-      description: What should happen? Please describe the desired behavior. A clear and concise description of what you want to happen.
-    validations:
-      required: true
-
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: Alternatives
-      description: What are the alternative solutions? Can this be solved in a different way? A clear and concise description of any alternative solutions or features you've considered.
-    validations:
-      required: true
-
-  - type: textarea
-    id: additional-context
-    attributes:
-      label: Alternatives
-      description: Add any other context or screenshots about the feature request here.
-    validations:
-      required: false
+- type: markdown
+  attributes:
+    value: |
+      Thanks for taking the time to fill out this Feature request!
+- type: checkboxes
+  id: initial-checklist
+  attributes:
+    label: Initial checklist
+    options:
+      - label: I read the [support docs](https://github.com/pi-apps/.github/blob/main/support.md)
+        required: true
+      - label: I read the [contributing guide](https://github.com/pi-apps/.github/blob/main/contributing.md)
+        required: true
+      - label: I searched [issues](https://github.com/search?q=user%3Api-apps&type=Issues) and couldn’t find anything (or linked relevant results below)
+        required: true
+- type: input
+  id: contact
+  attributes:
+    label: Contact Details
+    description: How can we get in touch with you if we need more info?
+    placeholder: ex. email@example.com
+  validations:
+    required: false
+- type: textarea
+  id: problem
+  attributes:
+    label: Problem
+    description: "**Is your feature request related to a problem? Please describe.** A clear and concise description of what the problem is."
+    placeholder: Ex. I'm always frustrated when [...]
+  validations:
+    required: true
+- type: textarea
+  id: steps-to-reproduce
+  attributes:
+    label: Steps To Reproduce What happened?
+    description: |
+        How did this happen? Please provide a [minimal, reproducible example](https://stackoverflow.com/help/minimal-reproducible-example).
+        **To Reproduce**
+        Steps to reproduce the behavior:
+          1. Go to '...'
+          2. Click on '....'
+          3. Scroll down to '....'
+          4. See error
+    placeholder: Tell us what you see!
+    value: |
+      **To Reproduce**
+      Steps to reproduce the behavior:
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+  validations:
+    required: true
+- type: textarea
+  id: solution
+  attributes:
+    label: Solution
+    description: What should happen? Please describe the desired behavior. A clear and concise description of what you want to happen.
+  validations:
+    required: true
+- type: textarea
+  id: alternatives
+  attributes:
+    label: Alternatives
+    description: What are the alternative solutions? Can this be solved in a different way? A clear and concise description of any alternative solutions or features you've considered.
+  validations:
+    required: false
+- type: textarea
+  id: additional-context
+  attributes:
+    label: Additional context
+    description: Add any other context or screenshots about the feature request here.
+  validations:
+    required: false
+- type: checkboxes
+  id: terms
+  attributes:
+    label: Code of Conduct
+    # - label: I agree to follow the [code of conduct](https://github.com/pi-apps/.github/blob/main/code-of-conduct.md)
+    description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
+    options:
+    - label: I agree to follow this project's Code of Conduct
+      required: true 
