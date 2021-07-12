@@ -1,4 +1,4 @@
-# Javascript SDK
+# Frontend Javascript SDK
 
 The JS SDK is the frontend SDK, designed to be used in your HTML pages or Single-Page Apps, served in the Pi Browser.
 
