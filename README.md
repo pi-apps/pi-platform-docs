@@ -10,7 +10,7 @@ This SDK is **not** for a server-side NodeJS app.
 
 ## Installation
 
-Add the following `script` tags to all pages where you need the SDK to be available:
+Add the following `script` tags to all pages where you need to call the Pi Apps SDK:
 
 ```html
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
