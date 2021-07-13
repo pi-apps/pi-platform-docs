@@ -234,3 +234,18 @@ content from your app with their friends.
 
 * `title`: the title of the message being shared
 * `message`: the message that will be sent when the user picks a target app in the Share flow
+
+
+
+## Open conversation (Coming Soon)
+
+Open a conversation:
+
+```typescript
+Pi.openConversation(conversationId: string): void;
+```
+
+Use this method to open a Pi conversation/chat thread, enabling your users to chat
+with other Pi users.
+
+* `conversationId`: the id of the conversation to open
