@@ -50,6 +50,19 @@ Authorization: Key <your Server API Key>
 
 ## API Reference
 
+### Authentication
+
+#### Access a user's resource
+
+Retrieve a user's data
+
+```
+GET /me
+```
+
+* Authorization method: **Access token**
+* Response type: [UserDTO](#UserDTO)
+
 ### Payments
 
 Base path: `/payments`.
@@ -102,6 +115,16 @@ Example request body:
 ```
 
 ## Resource types
+
+### `UserDTO`
+
+```typescript
+{
+  "username": string,
+  "uid": string,
+  "roles": Array<string>
+}
+```
 
 ### `PaymentDTO`
 
