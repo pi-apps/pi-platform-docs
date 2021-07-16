@@ -52,7 +52,7 @@ Authorization: Key <your Server API Key>
 
 ### Authentication
 
-#### Access a user's resource
+#### Access a user's resource:
 
 Retrieve a user's data
 
