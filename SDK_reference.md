@@ -57,6 +57,8 @@ Available scopes: `username`, `payments`, `roles`.
 
 Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
 to be present:
+> Notice that the `payments` scope doesn't have a corresponding field in the return value. This is to avoid confusion on the user-end when showing the consent popup. 
+> In order for users to be able to make payments, you need to make sure to use `payments` scope.
 
 | Field         | Description    | Required Scope  |
 | -------------: | ------------- | :-------------: |
