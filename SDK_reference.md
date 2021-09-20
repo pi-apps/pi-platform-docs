@@ -234,3 +234,17 @@ content from your app with their friends.
 
 * `title`: the title of the message being shared
 * `message`: the message that will be sent when the user picks a target app in the Share flow
+
+
+## Play Youtube videos
+
+Open the youtube videos in full screen mode:
+
+```typescript
+Pi.playYoutubeVideo(videoId: string): void;
+```
+
+Use this method to open a youtube video (requires youtube app to be present in the phone) which uses google apis to track the video view count, enabling your users to share youtube video links from their application.
+
+* `videoId`: the youtube video ID
+
