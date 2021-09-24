@@ -120,9 +120,8 @@ Example request body:
 
 ```typescript
 {
-  "username": string,
-  "uid": string,
-  "roles": Array<string>
+  "uid": string, // An app-specific user identifier
+  "username": string, // The user's Pi username. Requires the `username` scope.
 }
 ```
 
