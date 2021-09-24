@@ -54,7 +54,8 @@ Authorization: Key <your Server API Key>
 
 #### Access a user's resource:
 
-Retrieve a user's data
+Retrieve the user's information.
+
 
 ```
 GET /me
@@ -62,6 +63,15 @@ GET /me
 
 * Authorization method: **Access token**
 * Response type: [UserDTO](#UserDTO)
+
+Verify the data obtained with the frontend SDK (a malicious user could tamper with the requests and
+send you wrong data) by sending the user’s access token to your backend and using this API endpoint
+to verify the token validity and the user’s identity.
+
+Access tokens are long, random strings, and the request will fail (401 HTTP error code) if the token
+has been tampered with (a tampered token would
+not belong to any real user).
+
 
 ### Payments
 
