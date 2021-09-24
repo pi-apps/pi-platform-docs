@@ -34,6 +34,12 @@ to configure this and view your Sandbox URL.
 
 ## Authentication
 
+> **Warning:** The user information obtained with this method should not be passed to your backend and should
+> only be used for presentation logic (e.g displaying the user’s username).
+> **On your backend, use the Platform API as the source of truth.** You can verify the user's
+> identity by requesting the /me endpoint from your backend, using the access token obtained with this method.
+
+
 ```typescript
 Pi.authenticate(scopes: Array<string>, onIncompletePaymentFound: Function<PaymentDTO>): Promise<AuthResult>
 ```

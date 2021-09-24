@@ -50,6 +50,29 @@ Authorization: Key <your Server API Key>
 
 ## API Reference
 
+### Authentication
+
+#### Access a user's resource:
+
+Retrieve the user's information.
+
+
+```
+GET /me
+```
+
+* Authorization method: **Access token**
+* Response type: [UserDTO](#UserDTO)
+
+Verify the data obtained with the frontend SDK (a malicious user could tamper with the requests and
+send you wrong data) by sending the user’s access token to your backend and using this API endpoint
+to verify the token validity and the user’s identity.
+
+Access tokens are long, random strings, and the request will fail (401 HTTP error code) if the token
+has been tampered with (a tampered token would
+not belong to any real user).
+
+
 ### Payments
 
 Base path: `/payments`.
@@ -102,6 +125,15 @@ Example request body:
 ```
 
 ## Resource types
+
+### `UserDTO`
+
+```typescript
+{
+  "uid": string, // An app-specific user identifier
+  "username": string, // The user's Pi username. Requires the `username` scope.
+}
+```
 
 ### `PaymentDTO`
 
