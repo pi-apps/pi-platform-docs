@@ -52,19 +52,20 @@ type AuthResult = {
   user: {
     uid: string,
     username: string
-  }
+  },
+  roles: [ 
+  0: string, 
+  ...
+  ],
 }
 ```
 
 ### `scopes`
 
-Available scopes: `username`, `payments`.
+Available scopes: `username`, `payments`, `roles`.
 
-> **Not yet implemented**
->
-> Currently, all calls to the `authenticate` method will assume all scopes have been requested - i.e all calls
-> are interpreted as though the first argument were `['username', 'payments']`.
-> However, you should implement your app by only adding the scopes you need when calling `authenticate`.
+> Currently, all calls to the `authenticate` method will assume only the `payments` scopes has been requested.
+> You should implement your call to the Pi SDK by only adding the scopes you need when calling `authenticate`.
 > Scopes support will be added before the general release of the Pi platform.
 
 Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
@@ -74,6 +75,7 @@ to be present:
 | -------------: | ------------- | :-------------: |
 | `uid`      | An app-local identifier for the user. This is specific to this user, and this app. It will change if the user revokes the permissions they granted to your app. | (none) |
 | `username`   | The user's Pi username.      |   `username` |
+| `roles`   | The user's community roles (e.g. Moderator, Email Verified)      |   `roles` |
 
 ### `onIncompletePaymentFound`
 
