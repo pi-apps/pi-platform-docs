@@ -50,6 +50,8 @@ transaction and submit it to the Pi blockchain.
 
 ```javascript
 
+* [the client SDK documentation](./SDK_reference.md) to learn about Pi Apps SDK and provided methods in detail
+
 Pi.createPayment({
   // Amount of π to be paid:
   amount: 3.14,
