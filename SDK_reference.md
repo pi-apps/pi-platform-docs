@@ -80,8 +80,7 @@ the payment and submit the blockchain transaction, or reject it.
 > **Warning: concurrent payments:**
 >
 > When creating a new payment, if there is already an open payment with your app for the current user:
-> * If the user has not yet made the blockchain transaction, the open payment will be cancelled.
-> * If the user has already made the blockchain transaction, the new payment will be rejected
+ @@ -119,78 +85,46 @@ the payment and submit the blockchain transaction, or reject it.
 > (`onError` will be called) and the `onIncompletePaymentFound` callback that was passed to the `authenticate`
 > method will be called with the existing payment (use this callback to resolve the situation, e.g by sending
 > the previous payment to your server for server-side completion).
@@ -128,28 +127,7 @@ This type is used in the arguments that are passed to `onIncompletePaymentFound`
 ```typescript
 type PaymentDTO = {
   // Payment data:
-  identifier: string, // The payment identifier
-  user_uid: string, // The user's app-specific ID
-  amount: number, // The payment amount
-  memo: string, // A string provided by the developer, shown to the user
-  metadata: Object, // An object provided by the developer for their own usage
-  to_address: string, // The recipient address of the blockchain transaction
-  created_at: string, // The payment's creation timestamp
-  
-  // Status flags representing the current state of this payment
-  status: {
-    developer_approved: boolean, // Server-Side Approval
-    transaction_verified: boolean, // Blockchain transaction verified
-    developer_completed: boolean, // Server-Side Completion
-    cancelled: boolean, // Cancelled by the developer or by Pi Network
-    user_cancelled: boolean, // Cancelled by the user
-  },
-  
-  // Blockchain transaction data:
-  transaction: null | { // This is null if no transaction has been made yet
-    txid: string, // The id of the blockchain transaction
-    verified: boolean, // True if the transaction matches the payment, false otherwise
-    _link: string, // A link to the operation on the Blockchain API
+ @@ -219,18 +153,12 @@ type PaymentDTO = {
   },
 }
 ```
