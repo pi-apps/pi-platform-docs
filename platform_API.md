@@ -57,86 +57,63 @@ Authorization: Key <your Server API Key>
 Retrieve the user's information.
 
 
+ ```
+ GET /me
 ```
-GET /me
-```
+ * Authorization method: **Access token**
+ * Response type: [UserDTO](#UserDTO)
 
-* Authorization method: **Access token**
-* Response type: [UserDTO](#UserDTO)
+ Verify the data obtained with the frontend SDK (a malicious user could tamper with the requests and
+ send you wrong data) by sending the user’s access token to your backend and using this API endpoint
+ to verify the token validity and the user’s identity.
 
-Verify the data obtained with the frontend SDK (a malicious user could tamper with the requests and
-send you wrong data) by sending the user’s access token to your backend and using this API endpoint
-to verify the token validity and the user’s identity.
-
-Access tokens are long, random strings, and the request will fail (401 HTTP error code) if the token
-has been tampered with (a tampered token would
-not belong to any real user).
+ Access tokens are long, random strings, and the request will fail (401 HTTP error code) if the token
+ has been tampered with (a tampered token would
+ not belong to any real user).
 
 
-### Payments
+ ### Payments
 
-Base path: `/payments`.
-
+ Base path: `/payments`.
 #### Create a payment:
-
 Do not create payments using the Platform API. Use the client-side Javascript SDK for this purpose.
-
 #### Get a payment:
-
 Get information about a payment.
-
 ```
 GET /payments/{payment_id}
 ```
-
 * Authorization method: **Server API Key**
 * Response type: [PaymentDTO](#PaymentDTO)
-
 #### Approve a payment:
-
 Server-side approval: mark a payment as approved, enabling the user to submit the transaction to the blockchain.
-
 ```
 POST /payments/{payment_id}/approve
 ```
-
 * Authorization method: **Server API Key**
 * Response type: [PaymentDTO](#PaymentDTO)
-
 #### Complete a payment:
-
 Server-side completion: mark a payment as completed by proving to the Pi Servers that your app has obtained the
 payment's txid, enabling the user to close the payment flow.
-
 ```
 POST /payments/{payment_id}/complete
 ```
-
-
 * Authorization method: **Server API Key**
 * Response type: [PaymentDTO](#PaymentDTO)
-
 Example request body:
-
 ```
 {
   "txid": "7a7ed20d3d72c365b9019baf8dc4c4e3cce4c08114d866e47ae157e3a796e9e7"
 }
 ```
-
 ## Resource types
-
 ### `UserDTO`
-
 ```typescript
 {
   "uid": string, // An app-specific user identifier
   "username": string, // The user's Pi username. Requires the `username` scope.
 }
 ```
-
 ### `PaymentDTO`
-
 ```typescript
 {
   // Payment data:
