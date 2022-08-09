@@ -39,12 +39,14 @@ type AuthResult = {
 ```
 ### `scopes`
 Available scopes: `username`, `payments`, `roles`.
-Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
-to be present:
-> Notice that the `payments` scope doesn't have a corresponding field in the return value. This is to avoid confusion on the user-end when showing the consent popup. 
-> In order for users to be able to make payments, you need to make sure to use `payments` scope.
-| Field         | Description    | Required Scope  |
-| -------------: | ------------- | :-------------: |
+
+ Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
+ to be present:
+ > Notice that the `payments` scope doesn't have a corresponding field in the return value. This is to avoid confusion on the user-end when showing the consent popup. 
+ > In order for users to be able to make payments, you need to make sure to use `payments` scope.
+
+ | Field         | Description    | Required Scope  |
+ | -------------: | ------------- | :-------------: |
 | `uid`      | An app-local identifier for the user. This is specific to this user, and this app. It will change if the user revokes the permissions they granted to your app. | (none) |
 | `username`   | The user's Pi username.      |   `username` |
 | `roles`      | The user's Pi community roles. Available values are `core_team`, `mega_mod`, `moderator` and `email_verified`. This field is subject to change in the future. | `roles`|
@@ -80,7 +82,8 @@ the payment and submit the blockchain transaction, or reject it.
 > **Warning: concurrent payments:**
 >
 > When creating a new payment, if there is already an open payment with your app for the current user:
- @@ -119,78 +85,46 @@ the payment and submit the blockchain transaction, or reject it.
+> * If the user has not yet made the blockchain transaction, the open payment will be cancelled.
+> * If the user has already made the blockchain transaction, the new payment will be rejected
 > (`onError` will be called) and the `onIncompletePaymentFound` callback that was passed to the `authenticate`
 > method will be called with the existing payment (use this callback to resolve the situation, e.g by sending
 > the previous payment to your server for server-side completion).
@@ -127,7 +130,28 @@ This type is used in the arguments that are passed to `onIncompletePaymentFound`
 ```typescript
 type PaymentDTO = {
   // Payment data:
- @@ -219,18 +153,12 @@ type PaymentDTO = {
+  identifier: string, // The payment identifier
+  user_uid: string, // The user's app-specific ID
+  amount: number, // The payment amount
+  memo: string, // A string provided by the developer, shown to the user
+  metadata: Object, // An object provided by the developer for their own usage
+  to_address: string, // The recipient address of the blockchain transaction
+  created_at: string, // The payment's creation timestamp
+  
+  // Status flags representing the current state of this payment
+  status: {
+    developer_approved: boolean, // Server-Side Approval
+    transaction_verified: boolean, // Blockchain transaction verified
+    developer_completed: boolean, // Server-Side Completion
+    cancelled: boolean, // Cancelled by the developer or by Pi Network
+    user_cancelled: boolean, // Cancelled by the user
+  },
+  
+  // Blockchain transaction data:
+  transaction: null | { // This is null if no transaction has been made yet
+    txid: string, // The id of the blockchain transaction
+    verified: boolean, // True if the transaction matches the payment, false otherwise
+    _link: string, // A link to the operation on the Blockchain API
   },
 }
 ```
