@@ -76,4 +76,5 @@ Please refer to:
 * [the full Payments documentation](./payments.md) to learn about the complete payment flow
 * [the Platform API documentation](./platform_API.md) to learn how to confirm the payment and acknowledge it from your
   server
+* [the client SDK documentation](./SDK_reference.md) to learn about Pi Apps SDK and provided methods in detail
 * the Demo App (coming soon!) to view an example of how you can implement the various required flows in your app's code.
