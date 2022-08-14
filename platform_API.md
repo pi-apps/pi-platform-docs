@@ -54,7 +54,7 @@ Authorization: Key <your Server API Key>
 
 #### Access a user's resource:
 
-Retrieve the user's information.
+Retrieve the user's information:
 
 
 ```
