@@ -1,80 +1,96 @@
-# Frontend Javascript SDK
+# Stellar Explorer
+[![Build Status](https://travis-ci.org/chatch/stellarexplorer.svg?branch=master)](https://travis-ci.org/chatch/stellarexplorer)
+A ledger explorer for [Stellar](https://stellar.org).
+Public: https://steexp.com
+Test: https://testnet.steexp.com
+Local: http://localhost:3000
+## Resources
+### Lists
+| Resource     | URI                                          |
+| ------------ | -------------------------------------------- |
+| Operations   | [/operations](https://steexp.com/operations) |
+| Transactions | [/txs](https://steexp.com/txs)               |
+| Ledgers      | [/ledgers](https://steexp.com/ledgers)       |
+| Payments     | [/payments](https://steexp.com/payments)     |
+| Trades       | [/trades](https://steexp.com/trades)         |
+| Effects      | [/effects](https://steexp.com/effects)       |
+### Directory
+| Resource  | URI                                        |
+| --------- | ------------------------------------------ |
+| Assets    | [/assets](https://steexp.com/assets)       |
+| Anchors   | [/anchors](https://steexp.com/anchors)     |
+| Exchanges | [/exchanges](https://steexp.com/exchanges) |
 
-The JS SDK is the frontend SDK, designed to be used in your HTML pages or Single-Page Apps, served in the Pi Browser.
+ ### Accounts
 
-In order to enable the SDK to function correctly, you need to declare your apps on the Developer Portal (open
-develop.pi in the Pi Browser to access the Developer Portal).
+ | Resource             | URI |
+ | -------------------- | --- |
+ | by Federated address | [/account/stellar\*fed.network](https://steexp.com/account/stellar*fed.network) |
+ | by Public address    | [/account/GAREELUB43IRHWEASCFBLKHURCGMHE5IF6XSE7EXDLACYHGRHM43RFOX](https://steexp.com/account/GAREELUB43IRHWEASCFBLKHURCGMHE5IF6XSE7EXDLACYHGRHM43RFOX) |
+ | by Multiplexed address    | [/account/MDZ464OWNGEL4X2DE6JPLEARO2WJ4AGCBN3XM7E4ZSLPHRBV6AZB6AAAAAAAAAAAAGW4M](https://steexp.com/account/MDZ464OWNGEL4X2DE6JPLEARO2WJ4AGCBN3XM7E4ZSLPHRBV6AZB6AAAAAAAAAAAAGW4M) |
 
-This SDK is **not** for a server-side NodeJS app.
+ #### Tabs
 
+| Resource         | URI                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------- |
+| Balances Tab     | [/account/stellar\*fed.network#balances](https://steexp.com/account/stellar*fed.network#balances)         |
+| Payments Tab     | [/account/stellar\*fed.network#payments](https://steexp.com/account/stellar*fed.network#payments)         |
+| Offers Tab       | [/account/stellar\*fed.network#offers](https://steexp.com/account/stellar*fed.network#offers)             |
+| Trades Tab       | [/account/stellar\*fed.network#trades](https://steexp.com/account/stellar*fed.network#trades)             |
+| Effects Tab      | [/account/stellar\*fed.network#effects](https://steexp.com/account/stellar*fed.network#effects)           |
+| Operations Tab   | [/account/stellar\*fed.network#operations](https://steexp.com/account/stellar*fed.network#operations)     |
+| Transactions Tab | [/account/stellar\*fed.network#transactions](https://steexp.com/account/stellar*fed.network#transactions) |
+| Signing Tab      | [/account/stellar\*fed.network#signing](https://steexp.com/account/stellar*fed.network#signing)           |
+| Flags Tab        | [/account/stellar\*fed.network#flags](https://steexp.com/account/stellar*fed.network#flags)               |
+| Data Tab         | [/account/stellar\*fed.network#data](https://steexpcom/account/stellar*fed.network#data)                  |
 
-## Installation
+ ### Search
 
-Add the following `script` tags to all pages where you need to call the Pi Apps SDK:
+ | Resource              | URI |
+ | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ | Federated address     | [/search/steexp\*fed.network](https://steexp.com/search/steexp*fed.network) |
+ | Public address        | [/search/GAREELUB43IRHWEASCFBLKHURCGMHE5IF6XSE7EXDLACYHGRHM43RFOX](https://steexp.com/search/GAREELUB43IRHWEASCFBLKHURCGMHE5IF6XSE7EXDLACYHGRHM43RFOX) |
+ | Multiplexed address        | [/search/MDZ464OWNGEL4X2DE6JPLEARO2WJ4AGCBN3XM7E4ZSLPHRBV6AZB6AAAAAAAAAAAAGW4M](https://steexp.com/search/MDZ464OWNGEL4X2DE6JPLEARO2WJ4AGCBN3XM7E4ZSLPHRBV6AZB6AAAAAAAAAAAAGW4M) |
+ | Ledger                | [/search/10000000](https://steexp.com/search/10000000) |
+ | Transaction           | [/search/26a568681712a44a515b2c90dcfaadb3ed2c40dc60254638407937bee4767071](https://steexp.com/search/26a568681712a44a515b2c90dcfaadb3ed2c40dc60254638407937bee4767071) |
+ | Asset Code            | [/search/NGN](https://steexp.com/search/NGN) |
+ | Anchor Name           | [/search/ripplefox](https://steexp.com/search/ripplefox) |
+ | Anchor Name (Partial) | [/search/fox](https://steexp.com/search/fox) |
 
-```html
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
-<script>Pi.init({ version: "2.0" })</script>
+ ### Misc
+
+ | Resource    | URI |
+ | ----------- | --- |
+ | Transaction | [/tx/26a568681712a44a515b2c90dcfaadb3ed2c40dc60254638407937bee4767071](https://steexp.com/tx/26a568681712a44a515b2c90dcfaadb3ed2c40dc60254638407937bee4767071) |
+ | Ledger      | [/ledger/10000000](https://steexp.com/ledger/10000000) |
+ | Anchor      | [/anchor/apay.io](https://steexp.com/anchor/apay.io) |
+ | Asset       | [/asset/NGN](https://steexp.com/asset/NGN) |
+
+ ## Exploring Private / Local Development Networks<a name="private-networks"></a>
+
+steexp will connect to a local horizon instance at http://localhost:8000 by default. If your running a local private network for development this is quite handy for browsing your changes to the ledger.
+Alternatively you can run locally connecting to the testnet or public network horizon instances. To do this define these aliases to localhost:
 ```
-
-This will load the Pi Network JS SDK as a global `window.Pi` object.
-
-## Usage
-
-### Authenticate a user
-
-You cannot perform any user-related operations (e.g read the user's info, request a payment from them) until you
-have successfully authenticated the user. The first time, they will be presented with a dialog asking for
-their consent to share their data with your app.
-
-```javascript
-// Authenticate the user, and get permission to request payments from them:
-const scopes = ['payments'];
-
-// Read more about this callback in the SDK reference:
-function onIncompletePaymentFound(payment) { /* ... */ };
-
-Pi.authenticate(scopes, onIncompletePaymentFound).then(function(auth) {
-  console.log(`Hi there! You're ready to make payments!`);
-}).catch(function(error) {
-  console.error(error);
-});
+127.0.1.1  testnet.local     # for steexp use testnet horizon
+127.0.1.1  publicnet.local   # for steexp use mainnet horizon
 ```
-
-### Request a payment
-
-The `createPayment` method enables you to request a payment from the current user to your app's account.
-
-The user will be prompted with a modal provided by the Pi Wallet, enabling them to sign the
-transaction and submit it to the Pi blockchain.
-
-```javascript
-
-Pi.createPayment({
-  // Amount of π to be paid:
-  amount: 3.14,
-  // An explanation of the payment - will be shown to the user:
-  memo: "...", // e.g: "Digital kitten #1234",
-  // An arbitrary developer-provided metadata object - for your own usage:
-  metadata: { /* ... */ }, // e.g: { kittenId: 1234 }
-}, {
-  // Callbacks you need to implement - read more about those in the detailed docs linked below:
-  onReadyForServerApproval: function(paymentId) { /* ... */ },
-  onReadyForServerCompletion: function(paymentId, txid) { /* ... */ },
-  onCancel: function(paymentId) { /* ... */ },
-  onError: function(error, payment) { /* ... */ },
-});
-
+Navigate to http://testnet.local:3000 or http://publicnet.local:3000 to select the network your interesting in exploring.
+## Development
+See the section [Exploring Private / Local Development Networks](#private-networks) for connecting to different backend networks. By default steexp will look for a local instance of horizon.
+Start:
 ```
-
-This code block is a **simplified example** to give you a sense of how it works.
-
-In order to make sure that all involved parties (your app, your server, the Pi servers, and the Pi blockchain) are in sync,
-the payment needs to go through a **Server-Side Approval** flow and a **Server-Side Completion** flow.
-
-Please refer to:
-* [the full Payments documentation](./payments.md) to learn about the complete payment flow
-* [the Platform API documentation](./platform_API.md) to learn how to confirm the payment and acknowledge it from your
-  server
-* [the client SDK documentation](./SDK_reference.md) to learn about Pi Apps SDK and provided methods in detail
-* the Demo App (coming soon!) to view an example of how you can implement the various required flows in your app's code.
+npm i && npm start
+```
+Test:
+```
+npm i && npm test
+```
+Build:
+```
+npm i && npm run build
+```
+## Languages
+Use the language selector in the top right corner to change the language.
+Translation files are here:
+https://github.com/chatch/stellarexplorer/tree/master/src/languages
+Submit pull requests with new languages or languages fixes there.
