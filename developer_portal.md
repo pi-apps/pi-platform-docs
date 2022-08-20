@@ -17,15 +17,12 @@ With the help of Pi SDK and Pi API, you can create applications that run within 
 </div>
 
 > When the app is connecting to the Pi Testnet, you can maintain a list of whitelisted users. Your testnet app will only be accessible by users you allowed, and if you leave this field empty, anyone can access your test app.
-
 <div style="text-align:center;">
     <img src="./img/dev_portal_new_2.png" alt="drawing" width="200"/>
 </div>
 
 > When the app is connecting to the Pi Mainnet, you can pair one of your testnet apps to the mainnet app. More specific usage is coming soon in the future.
-
 > When you're hosting the app on your server, you will also need to provide the url. Notice that you'll be asked to verify the ownership of the url after you register the app. After you filled in the required fields, you can submit to register your app by clicking on `Submit` button at the bottom of the page.
-
 <div style="text-align:center;">
     <img src="./img/dev_portal_new_3.png" alt="drawing" width="200"/>
 </div>
