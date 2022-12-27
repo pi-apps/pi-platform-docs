@@ -1,4 +1,4 @@
-# Client SDK reference
+# Client SDK reference:
 
 ## Initialization
 
