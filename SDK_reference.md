@@ -79,7 +79,7 @@ to be present:
 
 Signature: `(payment: PaymentDTO) => void`
 
-Every time the user is authenticated, and when they try to start a new payment flow, the SDK checks that there is no
+Every time when the user is authenticated, and when they try to start a new payment flow, the SDK checks that there is no
 incomplete payment for this user. An incomplete payment, in this context, is a payment which has been submitted to
 the Pi blockchain, but where `status.developer_completed` is still `false` (i.e. the developer has not called the
 `/complete` endpoint on this payment).
@@ -157,7 +157,8 @@ Example: `{ orderId: 1234, itemIds: [11, 42, 314] }`
 
 Signature: `(paymentId: string) => void`
 
-This is called when the payment identifier (paymentId) is obtained from Pi Servers.
+This is called when the payment identifier (paymentId) is obtained from Pi Servers. During the approval time period, this callback will be invoked multiple times in case of failure.
+If the initial trial fails, the Pi SDK will continue to invoke the function roughly every 10 seconds until the approval timer ends.
 
 Use this callback to send the paymentId to your backend for **Server-Side Approval**.
 Read more about Server-Side Approval and the full payment flow in the dedicated
@@ -167,7 +168,8 @@ Read more about Server-Side Approval and the full payment flow in the dedicated
 
 Signature: `(paymentId: string, txid: string) => void`
 
-This is called when the user has submitted the transaction to the Pi blockchain.
+This is called when the user has submitted the transaction to the Pi blockchain. During the completion time period, this callback will be invoked multiple times in case of failure.
+If the initial trial fails, the Pi SDK will continue to invoke the function roughly every 10 seconds until the completion timer ends.
 
 Use this callback to send the blockchain transaction identifier (txid), along with the paymentId
 to your backend for **Server-Side Completion**.

@@ -64,3 +64,17 @@ This implementation is your responsibility.
 > have made a payment. If the API call for Server-Side completion
 > returns a non-200 error code, **do not** mark the payment as complete on your
 > side, and **do not** deliver whatever the user was trying to buy.
+
+
+## Simplified flow
+
+This diagram shows the same payment flow from your app's point of view in a simplified manner.
+
+![Payment flow](./img/payment_flow_simplified.png)
+
+1. Use the Pi SDK function to initiate the payment
+2. A callback function that gets called automatically by the Pi SDK (letting your App Server know that it needs to make an approve API request)
+3. An API request from your App Server to the Pi Server to approve the payment (letting the Pi Server know that you are aware of this payment)
+4. The Pi browser shows the payment detail page to a user, and we are waiting until the user signs the transaction
+5. A callback function that gets called automatically by the Pi SDK (letting your App Server know that it needs to make an complete API request)
+6. An API request from your App Server to the Pi Server to complete the payment (letting the Pi Server know that you completed this payment)

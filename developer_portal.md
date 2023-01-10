@@ -24,11 +24,11 @@ With the help of Pi SDK and Pi API, you can create applications that run within 
 
 > When the app is connecting to the Pi Mainnet, you can pair one of your testnet apps to the mainnet app. More specific usage is coming soon in the future.
 
-> When you're hosting the app on your server, you will also need to provide the url. Notice that you'll be asked to verify the ownership of the url after you register the app. After you filled in the required fields, you can submit to register your app by clicking on `Submit` button at the bottom of the page.
-
 <div style="text-align:center;">
     <img src="./img/dev_portal_new_3.png" alt="drawing" width="200"/>
 </div>
+
+> When you're hosting the app on your server, you will also need to provide the url. Notice that you'll be asked to verify the ownership of the url after you register the app. After you filled in the required fields, you can submit to register your app by clicking on `Submit` button at the bottom of the page.
 
 3. After you register your app, you can see your apps in the main page. If you selected the paired app for your mainnet app, it will show like the following.
 
