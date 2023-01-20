@@ -58,7 +58,7 @@ type AuthResult = {
 
 ### `scopes`
 
-Available scopes: `username`, `payments`.
+Available scopes: `username`, `payments`, `wallet_address`.
 
 > **Not yet implemented**
 >
@@ -67,6 +67,7 @@ Available scopes: `username`, `payments`.
 > However, you should implement your app by only adding the scopes you need when calling `authenticate`.
 > Scopes support will be added before the general release of the Pi platform.
 
+<br />
 Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
 to be present:
 
@@ -75,6 +76,16 @@ to be present:
 | `uid`      | An app-local identifier for the user. This is specific to this user, and this app. It will change if the user revokes the permissions they granted to your app. | (none) |
 | `username`   | The user's Pi username.      |   `username` |
 
+<br />
+
+Here is a breakdown of scopes with no return and methods requiring them:
+
+| Scope         | Description    | Methods Requiring Scope  |
+| -------------: | ------------- | :-------------: |
+| `payments`      | Gives permission to the app to create payments on the users behalf | `createPayment` |
+| `wallet_address` | Gives the app access to the users public wallet address | `createPayment` - App to User Payments|
+
+<br />
 ### `onIncompletePaymentFound`
 
 Signature: `(payment: PaymentDTO) => void`
