@@ -1,12 +1,12 @@
 # Payments
 
 Payments are wrappers around blockchain transactions, which enable your app,
-the Pi blockchain, and the Pi Servers to be all synchronized when the user 
+the Pi Blockchain, and the Pi Servers to be all synchronized when the user 
 submits a blockchain transaction to pay for something in your app.
 
 They enable you, the developer of the app, to have full confidence that the
 user has actually made the transaction, while not having to
-bother with the technicalities involved when interacting with the Pi blockchain.
+bother with the technicalities involved when interacting with the Pi Blockchain.
 
 
 ## The Payment flow
@@ -33,7 +33,7 @@ After they're created, payments go through 3 major phases:
 **Phase II - User interaction and blockchain transaction**
 
 At this stage, the payment dialog becomes interactive and enables the
-user to confirm the transaction, sign it, and submit it to the Pi blockchain.
+user to confirm the transaction, sign it, and submit it to the Pi Blockchain.
 
 You do not have anything to do at this stage, everything is handled by the Pi
 Apps Platform and the Pi Wallet.

@@ -1,4 +1,4 @@
-# Client SDK reference:
+# Client SDK reference
 
 ## Initialization
 
@@ -41,7 +41,7 @@ to configure this and view your Sandbox URL.
 
 
 ```typescript
-Pi.authenticate(scopes: Array<string>, onIncompletePaymentFound: Function<PaymentDTO>): Promise<AuthResult>
+Pi.authenticate(scopes: Array<Scope>, onIncompletePaymentFound: Function<PaymentDTO>): Promise<AuthResult>
 ```
 
 Return value:
@@ -58,14 +58,7 @@ type AuthResult = {
 
 ### `scopes`
 
-Available scopes: `username`, `payments`.
-
-> **Not yet implemented**
->
-> Currently, all calls to the `authenticate` method will assume all scopes have been requested - i.e all calls
-> are interpreted as though the first argument were `['username', 'payments']`.
-> However, you should implement your app by only adding the scopes you need when calling `authenticate`.
-> Scopes support will be added before the general release of the Pi platform.
+Available scopes: `username`, `payments`, `wallet_address`
 
 Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
 to be present:
@@ -74,6 +67,8 @@ to be present:
 | -------------: | ------------- | :-------------: |
 | `uid`      | An app-local identifier for the user. This is specific to this user, and this app. It will change if the user revokes the permissions they granted to your app. | (none) |
 | `username`   | The user's Pi username.      |   `username` |
+| `payments` | Required if your app needs to make payments between your app and the users | `payments` |
+| `wallet_address` | The wallet address of the user who authenticates on your app. | `wallet_address` |
 
 ### `onIncompletePaymentFound`
 
@@ -81,7 +76,7 @@ Signature: `(payment: PaymentDTO) => void`
 
 Every time when the user is authenticated, and when they try to start a new payment flow, the SDK checks that there is no
 incomplete payment for this user. An incomplete payment, in this context, is a payment which has been submitted to
-the Pi blockchain, but where `status.developer_completed` is still `false` (i.e. the developer has not called the
+the Pi Blockchain, but where `status.developer_completed` is still `false` (i.e. the developer has not called the
 `/complete` endpoint on this payment).
 
 If an incomplete payment is found, this callback will be invoked with the payment's `PaymentDTO`.
@@ -168,7 +163,7 @@ Read more about Server-Side Approval and the full payment flow in the dedicated
 
 Signature: `(paymentId: string, txid: string) => void`
 
-This is called when the user has submitted the transaction to the Pi blockchain. During the completion time period, this callback will be invoked multiple times in case of failure.
+This is called when the user has submitted the transaction to the Pi Blockchain. During the completion time period, this callback will be invoked multiple times in case of failure.
 If the initial trial fails, the Pi SDK will continue to invoke the function roughly every 10 seconds until the completion timer ends.
 
 Use this callback to send the blockchain transaction identifier (txid), along with the paymentId
@@ -197,37 +192,63 @@ Otherwise, only the first argument will be provided.
 
 ### Type `PaymentDTO`
 
-This type is used in the arguments that are passed to `onIncompletePaymentFound` and `onError`.
+This type is for the arguments that are passed to `onIncompletePaymentFound` and `onError`.
 
 ```typescript
 type PaymentDTO = {
   // Payment data:
-  identifier: string, // The payment identifier
-  user_uid: string, // The user's app-specific ID
-  amount: number, // The payment amount
-  memo: string, // A string provided by the developer, shown to the user
-  metadata: Object, // An object provided by the developer for their own usage
-  to_address: string, // The recipient address of the blockchain transaction
-  created_at: string, // The payment's creation timestamp
+  identifier: string, // payment identifier
+  user_uid: string, // user's app-specific ID
+  amount: number, // payment amount
+  memo: string, // a string provided by the developer, shown to the user
+  metadata: Object, // an object provided by the developer for their own usage
+  from_address: string, // sender address of the blockchain transaction
+  to_address: string, // recipient address of the blockchain transaction
+  direction: Direction, // direction of the payment
+  created_at: string, // payment's creation timestamp
+  network: AppNetwork, // a network of the payment
   
   // Status flags representing the current state of this payment
   status: {
     developer_approved: boolean, // Server-Side Approval
-    transaction_verified: boolean, // Blockchain transaction verified
-    developer_completed: boolean, // Server-Side Completion
-    cancelled: boolean, // Cancelled by the developer or by Pi Network
-    user_cancelled: boolean, // Cancelled by the user
+    transaction_verified: boolean, // blockchain transaction verified
+    developer_completed: boolean, // server-Side Completion
+    cancelled: boolean, // cancelled by the developer or by Pi Network
+    user_cancelled: boolean, // cancelled by the user
   },
   
   // Blockchain transaction data:
   transaction: null | { // This is null if no transaction has been made yet
-    txid: string, // The id of the blockchain transaction
-    verified: boolean, // True if the transaction matches the payment, false otherwise
-    _link: string, // A link to the operation on the Blockchain API
+    txid: string, // id of the blockchain transaction
+    verified: boolean, // true if the transaction matches the payment, false otherwise
+    _link: string, // a link to the operation on the Blockchain API
   },
 }
 ```
 
+### Type `Direction`
+
+A developer can check the direction of the payment with this type.
+
+```typescript
+type Direction = "user_to_app" | "app_to_user"
+```
+
+### Type `AppNetwork`
+
+Shows which network the payment is being made on.
+
+```typescript
+type AppNetwork = "Pi Network" | "Pi Testnet"
+```
+
+### Type `Scope`
+
+Scopes you can request to users.
+
+```typescript
+type Scope = "username" | "payments" | "wallet_address"
+```
 
 ## Share dialog
 

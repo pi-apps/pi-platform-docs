@@ -54,8 +54,8 @@ Authorization: Key <your Server API Key>
 
 #### Access a user's resource:
 
-Retrieve the user's information.
-
+Retrieve the user's information, including user information limited to what the user has consented to share
+with your app.
 
 ```
 GET /me
@@ -75,12 +75,36 @@ not belong to any real user).
 
 ### Payments
 
-Base path: `/payments`.
+There are two different payment types.
 
-#### Create a payment:
+1. U2A (User-To-App)
+2. A2U (App-To-User)
 
-Do not create payments using the Platform API. Use the client-side Javascript SDK for this purpose.
 
+#### Create a payment (U2A):
+
+If a payment type is U2A, use `createPayment` method of the client-side Javascript SDK to create a payment. You can refer to [Payments](./SDK_reference.md#payments) section for more details.
+
+#### Create a payment (A2U):
+
+```
+POST /payments
+```
+* Authorization method: **Server API Key**
+* Response type: [PaymentDTO](#PaymentDTO)
+
+Example request body:
+
+```
+{
+  "payment": {
+    "amount": 1,
+    "memo": "From app to user test",
+    "metadata": {"test": "test metadata"},
+    "uid": "a1111111-aaaa-bbbb-2222-ccccccc3333d"
+  }
+}
+```
 #### Get a payment:
 
 Get information about a payment.
@@ -124,14 +148,47 @@ Example request body:
 }
 ```
 
+#### Cancel a payment:
+
+Mark the payment as cancelled.
+
+```
+POST /payments/{payment_id}/cancel
+```
+
+* Authorization method: **Server API Key**
+* Response type: [PaymentDTO](#PaymentDTO)
+
+
+#### Get incomplete server payments:
+
+Returns the list of server payments (i.e A2U payments) which are in EITHER one of the two states below:
+
+- payment created, but no blockchain transaction was made yet ;
+- blockchain transaction submitted, but the payment has not been completed by the developer.
+
+```
+GET /payments/incomplete_server_payments
+```
+
+* Authorization method: **Server API Key**
+* Response type: { "incomplete_server_payments": Array<[PaymentDTO](#PaymentDTO)> }
+
 ## Resource types
 
 ### `UserDTO`
 
 ```typescript
 {
-  "uid": string, // An app-specific user identifier
-  "username": string, // The user's Pi username. Requires the `username` scope.
+  uid: string, // An app-specific user identifier
+  credentials: {
+    scopes: Array<Scope>, // a list of granted scopes
+    valid_until: {
+      timestamp: number,
+      iso8601: string
+    }
+  },
+  username?: string, // The user's Pi username. Requires the `username` scope.
 }
 ```
 
@@ -140,28 +197,31 @@ Example request body:
 ```typescript
 {
   // Payment data:
-  "identifier": string, // The payment identifier
-  "user_uid": string, // The user's app-specific ID
-  "amount": number, // The payment amount
-  "memo": string, // A string provided by the developer, shown to the user
-  "metadata": Object, // An object provided by the developer for their own usage
-  "to_address": string, // The recipient address of the blockchain transaction
-  "created_at": string, // The payment's creation timestamp
+  identifier: string, // payment identifier
+  user_uid: string, // user's app-specific ID
+  amount: number, // payment amount
+  memo: string, // a string provided by the developer, shown to the user
+  metadata: Object, // an object provided by the developer for their own usage
+  from_address: string, // sender address of the blockchain transaction
+  to_address: string, // recipient address of the blockchain transaction
+  direction: Direction, // direction of the payment
+  created_at: string, // the payment's creation timestamp
+  network: AppNetwork, // a network of the payment
   
   // Status flags representing the current state of this payment
-  "status": {
-    "developer_approved": boolean, // Server-Side Approval
-    "transaction_verified": boolean, // Blockchain transaction verified
-    "developer_completed": boolean, // Server-Side Completion
-    "cancelled": boolean, // Cancelled by the developer or by Pi Network
-    "user_cancelled": boolean, // Cancelled by the user
+  status: {
+    developer_approved: boolean, // Server-Side Approval
+    transaction_verified: boolean, // blockchain transaction verified
+    developer_completed: boolean, // Server-Side Completion
+    cancelled: boolean, // cancelled by the developer or by Pi Network
+    user_cancelled: boolean, // cancelled by the user
   },
   
   // Blockchain transaction data:
-  "transaction": null | { // This is null if no transaction has been made yet
-    "txid": string, // The id of the blockchain transaction
-    "verified": boolean, // True if the transaction matches the payment, false otherwise
-    "_link": string, // A link to the operation on the Blockchain API
+  transaction: null | { // This is null if no transaction has been made yet
+    txid: string, // id of the blockchain transaction
+    verified: boolean, // true if the transaction matches the payment, false otherwise
+    _link: string, // a link to the operation on the Blockchain API
   },
 };
 ```
