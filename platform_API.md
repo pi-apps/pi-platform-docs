@@ -47,7 +47,6 @@ Authorization: Key <your Server API Key>
 > In the future, your server API key might enable sensitive operations on your app itself that your users should
 > not be allowed to perform. Letting users access your server API key is a **serious security breach**.
 
-
 ## API Reference
 
 ### Authentication
@@ -61,8 +60,8 @@ with your app.
 GET /me
 ```
 
-* Authorization method: **Access token**
-* Response type: [UserDTO](#UserDTO)
+- Authorization method: **Access token**
+- Response type: [UserDTO](#UserDTO)
 
 Verify the data obtained with the frontend SDK (a malicious user could tamper with the requests and
 send you wrong data) by sending the user’s access token to your backend and using this API endpoint
@@ -72,14 +71,12 @@ Access tokens are long, random strings, and the request will fail (401 HTTP erro
 has been tampered with (a tampered token would
 not belong to any real user).
 
-
 ### Payments
 
 There are two different payment types.
 
 1. U2A (User-To-App)
 2. A2U (App-To-User)
-
 
 #### Create a payment (U2A):
 
@@ -90,8 +87,9 @@ If a payment type is U2A, use `createPayment` method of the client-side Javascri
 ```
 POST /payments
 ```
-* Authorization method: **Server API Key**
-* Response type: [PaymentDTO](#PaymentDTO)
+
+- Authorization method: **Server API Key**
+- Response type: [PaymentDTO](#PaymentDTO)
 
 Example request body:
 
@@ -105,6 +103,7 @@ Example request body:
   }
 }
 ```
+
 #### Get a payment:
 
 Get information about a payment.
@@ -113,8 +112,8 @@ Get information about a payment.
 GET /payments/{payment_id}
 ```
 
-* Authorization method: **Server API Key**
-* Response type: [PaymentDTO](#PaymentDTO)
+- Authorization method: **Server API Key**
+- Response type: [PaymentDTO](#PaymentDTO)
 
 #### Approve a payment:
 
@@ -124,8 +123,8 @@ Server-side approval: mark a payment as approved, enabling the user to submit th
 POST /payments/{payment_id}/approve
 ```
 
-* Authorization method: **Server API Key**
-* Response type: [PaymentDTO](#PaymentDTO)
+- Authorization method: **Server API Key**
+- Response type: [PaymentDTO](#PaymentDTO)
 
 #### Complete a payment:
 
@@ -136,9 +135,8 @@ payment's txid, enabling the user to close the payment flow.
 POST /payments/{payment_id}/complete
 ```
 
-
-* Authorization method: **Server API Key**
-* Response type: [PaymentDTO](#PaymentDTO)
+- Authorization method: **Server API Key**
+- Response type: [PaymentDTO](#PaymentDTO)
 
 Example request body:
 
@@ -156,9 +154,8 @@ Mark the payment as cancelled.
 POST /payments/{payment_id}/cancel
 ```
 
-* Authorization method: **Server API Key**
-* Response type: [PaymentDTO](#PaymentDTO)
-
+- Authorization method: **Server API Key**
+- Response type: [PaymentDTO](#PaymentDTO)
 
 #### Get incomplete server payments:
 
@@ -171,8 +168,21 @@ Returns the list of server payments (i.e A2U payments) which are in EITHER one o
 GET /payments/incomplete_server_payments
 ```
 
-* Authorization method: **Server API Key**
-* Response type: { "incomplete_server_payments": Array<[PaymentDTO](#PaymentDTO)> }
+- Authorization method: **Server API Key**
+- Response type: { "incomplete_server_payments": Array<[PaymentDTO](#PaymentDTO)> }
+
+### Ads
+
+#### Verify a rewarded ad status
+
+Verify status of a rewarded ad by `adId` returned by client Pi SDK method `displayAd('rewarded')`
+
+```
+POST /ads_network/status/:adId
+```
+
+- Authorization method: **Server API Key**
+- Response type: [RewardedAdStatusDTO](#RewardedAdStatusDTO)
 
 ## Resource types
 
@@ -207,7 +217,7 @@ GET /payments/incomplete_server_payments
   direction: Direction, // direction of the payment
   created_at: string, // the payment's creation timestamp
   network: AppNetwork, // a network of the payment
-  
+
   // Status flags representing the current state of this payment
   status: {
     developer_approved: boolean, // Server-Side Approval
@@ -216,7 +226,7 @@ GET /payments/incomplete_server_payments
     cancelled: boolean, // cancelled by the developer or by Pi Network
     user_cancelled: boolean, // cancelled by the user
   },
-  
+
   // Blockchain transaction data:
   transaction: null | { // This is null if no transaction has been made yet
     txid: string, // id of the blockchain transaction
@@ -224,4 +234,15 @@ GET /payments/incomplete_server_payments
     _link: string, // a link to the operation on the Blockchain API
   },
 };
+```
+
+### `RewardedAdStatusDTO`
+
+```typescript
+{
+  "identifier": string; // the adId token returned from the Pi SDK displayAd("rewarded") method
+  "mediator_ack_status": "granted" | "revoked" | "failed" | null;
+  "mediator_granted_at": string | null; // ISO 8601 date string
+  "mediator_revoked_at": string | null; // ISO 8601 date string
+}
 ```

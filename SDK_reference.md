@@ -6,19 +6,24 @@ Add the following `script` tags to all pages where you need to call the Pi Apps 
 
 ```html
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-<script>Pi.init({ version: "2.0" })</script>
+<script>
+  Pi.init({ version: "2.0" });
+</script>
 ```
 
 The config object passed to the init function accepts the following keys:
-* `version` (string, required) - this is required to ensure compatibility of your app with newer SDK versions that might bring
+
+- `version` (string, required) - this is required to ensure compatibility of your app with newer SDK versions that might bring
   breaking changes (in which case breaking changes will be implemented under a higher version number)
-* `sandbox`: (boolean, optional) - this enables you to configure the SDK to run in the sandbox.
+- `sandbox`: (boolean, optional) - this enables you to configure the SDK to run in the sandbox.
 
 ### Using the SDK in sandbox mode:
 
 ```html
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-<script>Pi.init({ version: "2.0", sandbox: true })</script>
+<script>
+  Pi.init({ version: "2.0", sandbox: true });
+</script>
 ```
 
 You may now run your app in the sandbox environment (https://sandbox.minepi.com), provided you've configured
@@ -31,14 +36,12 @@ to configure this and view your Sandbox URL.
 > `Pi.init({ version: "2.0", sandbox: <%= process.env.NODE_ENV !== 'production' %> })`. This depends on your
 > setup, but running the Pi SDK in sandbox mode will generally happen whenever your app is running in development.
 
-
 ## Authentication
 
 > **Warning:** The user information obtained with this method should not be passed to your backend and should
 > only be used for presentation logic (e.g displaying the user’s username).
 > **On your backend, use the Platform API as the source of truth.** You can verify the user's
 > identity by requesting the /me endpoint from your backend, using the access token obtained with this method.
-
 
 ```typescript
 Pi.authenticate(scopes: Array<Scope>, onIncompletePaymentFound: Function<PaymentDTO>): Promise<AuthResult>
@@ -48,12 +51,12 @@ Return value:
 
 ```typescript
 type AuthResult = {
-  accessToken: string,
+  accessToken: string;
   user: {
-    uid: string,
-    username: string
-  }
-}
+    uid: string;
+    username: string;
+  };
+};
 ```
 
 ### `scopes`
@@ -63,12 +66,12 @@ Available scopes: `username`, `payments`, `wallet_address`
 Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
 to be present:
 
-| Field         | Description    | Required Scope  |
-| -------------: | ------------- | :-------------: |
-| `uid`      | An app-local identifier for the user. This is specific to this user, and this app. It will change if the user revokes the permissions they granted to your app. | (none) |
-| `username`   | The user's Pi username.      |   `username` |
-| `payments` | Required if your app needs to make payments between your app and the users | `payments` |
-| `wallet_address` | The wallet address of the user who authenticates on your app. | `wallet_address` |
+|            Field | Description                                                                                                                                                     |  Required Scope  |
+| ---------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------: |
+|            `uid` | An app-local identifier for the user. This is specific to this user, and this app. It will change if the user revokes the permissions they granted to your app. |      (none)      |
+|       `username` | The user's Pi username.                                                                                                                                         |    `username`    |
+|       `payments` | Required if your app needs to make payments between your app and the users                                                                                      |    `payments`    |
+| `wallet_address` | The wallet address of the user who authenticates on your app.                                                                                                   | `wallet_address` |
 
 ### `onIncompletePaymentFound`
 
@@ -84,7 +87,6 @@ If an incomplete payment is found, this callback will be invoked with the paymen
 When this callback is invoked, it is your responsibility to complete the corresponding payment (you should most
 likely send the payment DTO to your server, and process it according to your business logic). You'll need to do
 so before you can request a new payment from the user.
-
 
 ## Payments
 
@@ -115,13 +117,12 @@ the payment and submit the blockchain transaction, or reject it.
 > **Warning: concurrent payments:**
 >
 > When creating a new payment, if there is already an open payment with your app for the current user:
-> * If the user has not yet made the blockchain transaction, the open payment will be cancelled.
-> * If the user has already made the blockchain transaction, the new payment will be rejected
-> (`onError` will be called) and the `onIncompletePaymentFound` callback that was passed to the `authenticate`
-> method will be called with the existing payment (use this callback to resolve the situation, e.g by sending
-> the previous payment to your server for server-side completion).
-
-
+>
+> - If the user has not yet made the blockchain transaction, the open payment will be cancelled.
+> - If the user has already made the blockchain transaction, the new payment will be rejected
+>   (`onError` will be called) and the `onIncompletePaymentFound` callback that was passed to the `authenticate`
+>   method will be called with the existing payment (use this callback to resolve the situation, e.g by sending
+>   the previous payment to your server for server-side completion).
 
 ### `paymentData` keys:
 
@@ -189,7 +190,6 @@ This is called when an error occurs and the payment cannot be made. If the payme
 created, the second argument will be present and you may use it to investigate the error.
 Otherwise, only the first argument will be provided.
 
-
 ### Type `PaymentDTO`
 
 This type is for the arguments that are passed to `onIncompletePaymentFound` and `onError`.
@@ -197,33 +197,34 @@ This type is for the arguments that are passed to `onIncompletePaymentFound` and
 ```typescript
 type PaymentDTO = {
   // Payment data:
-  identifier: string, // payment identifier
-  user_uid: string, // user's app-specific ID
-  amount: number, // payment amount
-  memo: string, // a string provided by the developer, shown to the user
-  metadata: Object, // an object provided by the developer for their own usage
-  from_address: string, // sender address of the blockchain transaction
-  to_address: string, // recipient address of the blockchain transaction
-  direction: Direction, // direction of the payment
-  created_at: string, // payment's creation timestamp
-  network: AppNetwork, // a network of the payment
-  
+  identifier: string; // payment identifier
+  user_uid: string; // user's app-specific ID
+  amount: number; // payment amount
+  memo: string; // a string provided by the developer, shown to the user
+  metadata: Object; // an object provided by the developer for their own usage
+  from_address: string; // sender address of the blockchain transaction
+  to_address: string; // recipient address of the blockchain transaction
+  direction: Direction; // direction of the payment
+  created_at: string; // payment's creation timestamp
+  network: AppNetwork; // a network of the payment
+
   // Status flags representing the current state of this payment
   status: {
-    developer_approved: boolean, // Server-Side Approval
-    transaction_verified: boolean, // blockchain transaction verified
-    developer_completed: boolean, // server-Side Completion
-    cancelled: boolean, // cancelled by the developer or by Pi Network
-    user_cancelled: boolean, // cancelled by the user
-  },
-  
+    developer_approved: boolean; // Server-Side Approval
+    transaction_verified: boolean; // blockchain transaction verified
+    developer_completed: boolean; // server-Side Completion
+    cancelled: boolean; // cancelled by the developer or by Pi Network
+    user_cancelled: boolean; // cancelled by the user
+  };
+
   // Blockchain transaction data:
-  transaction: null | { // This is null if no transaction has been made yet
-    txid: string, // id of the blockchain transaction
-    verified: boolean, // true if the transaction matches the payment, false otherwise
-    _link: string, // a link to the operation on the Blockchain API
-  },
-}
+  transaction: null | {
+    // This is null if no transaction has been made yet
+    txid: string; // id of the blockchain transaction
+    verified: boolean; // true if the transaction matches the payment, false otherwise
+    _link: string; // a link to the operation on the Blockchain API
+  };
+};
 ```
 
 ### Type `Direction`
@@ -231,7 +232,7 @@ type PaymentDTO = {
 A developer can check the direction of the payment with this type.
 
 ```typescript
-type Direction = "user_to_app" | "app_to_user"
+type Direction = "user_to_app" | "app_to_user";
 ```
 
 ### Type `AppNetwork`
@@ -239,7 +240,7 @@ type Direction = "user_to_app" | "app_to_user"
 Shows which network the payment is being made on.
 
 ```typescript
-type AppNetwork = "Pi Network" | "Pi Testnet"
+type AppNetwork = "Pi Network" | "Pi Testnet";
 ```
 
 ### Type `Scope`
@@ -247,7 +248,17 @@ type AppNetwork = "Pi Network" | "Pi Testnet"
 Scopes you can request to users.
 
 ```typescript
-type Scope = "username" | "payments" | "wallet_address"
+type Scope = "username" | "payments" | "wallet_address";
+```
+
+## Native features list
+
+Use this method to get a list of native features available for specific version of Pi Browser your user is using. Some SDK features may require particular features to work properly.
+
+```typescript
+type NativeFeature = "inline_media" | "request_permission" | "ad_network";
+
+Pi.nativeFeaturesList(): Promise<Array<NativeFeature>>;
 ```
 
 ## Share dialog
@@ -261,5 +272,80 @@ Pi.openShareDialog(title: string, message: string): void;
 Use this method to open a native Share dialog (provided by the phone's OS), enabling your users to share
 content from your app with their friends.
 
-* `title`: the title of the message being shared
-* `message`: the message that will be sent when the user picks a target app in the Share flow
+- `title`: the title of the message being shared
+- `message`: the message that will be sent when the user picks a target app in the Share flow
+
+## Ads
+
+SDK contains the `Ads` module (object) which allows developers to display ads to the users. It provides several methods for both interstitial and rewarded ads. All of the methods take advantage of Promise-based asynchronicity.
+
+```typescript
+type AdType = "interstitial" | "rewarded";
+```
+
+### Show ad
+
+Use `showAd(adType: "interstitial" | "rewarded")` method to display an ad to a user. It returns a promise which resolves with an object of type `ShowAdResponse`:
+
+```typescript
+type ShowAdResponse =
+  | {
+      type: "interstitial";
+      result: "AD_CLOSED" | "AD_DISPLAY_ERROR" | "AD_NETWORK_ERROR" | "AD_NOT_AVAILABLE";
+    }
+  | {
+      type: "rewarded";
+      result: "AD_REWARDED" | "AD_CLOSED" | "AD_DISPLAY_ERROR" | "AD_NETWORK_ERROR" | "AD_NOT_AVAILABLE" | "ADS_NOT_SUPPORTED" | "USER_UNAUTHENTICATED";
+      adId?: string;
+    };
+
+Pi.Ads.showAd(adType: AdType): Promise<ShowAdResponse>
+
+```
+
+- `"AD_NOT_AVAILABLE"` indicates the ad failed to load,
+- `"AD_CLOSED"` indicates the ad was successfully displayed and closed,
+- `"AD_REWARDED"` indicates the ad was successfully displayed and rewarded (only applicable for `rewarded` ads),
+- `"AD_DISPLAY_ERROR"` indicates the ad was successfully loaded but failed to be displayed,
+- `"AD_NETWORK_ERROR"` indicates that a user might have encountered network connection issues,
+- `"ADS_NOT_SUPPORTED"` - indicates that app version used by uesr does not support ads,
+- `"USER_UNAUTHENTICATED"` - indicates that user is not authenticated therefore rewarded ad cannot be display (only for `rewarded` ads).
+
+The Pi Browser internally manages the ads availability strategy, automatically loading initial ads and reloading them whenever displayed. This ensures that ads are consistently ready for display. However, in rare cases, loading ads may be interrupted or the third party app may use `showAd()` methods too quickly (even before the next ad is ready). To allow developers handle these cases, the Pi SDK provides additional methods: `isAdReady()` and `requestAd()`.
+
+</br>
+
+> **Notes:**
+>
+> - If your application was approved to Pi Developer Ad Network, the response from `Pi.Ads.showAd('rewarded')` will contain additional `adId` fields, which allows you to [verify the rewarded status using Pi Platform API](ads.md#rewarded-ads-status-verification-with-pi-platform-api).
+> - If your application wasn't approved to Pi Developer Ad Network, the `adId` field will be missing from `Pi.Ads.showAd('rewarded')` response. You should not grant rewards to users without verifying the `adId` using [Pi Platform API](platform_API.md#verify-a-rewarded-ad-status).
+
+### Check if ad is ready
+
+Use `isAdReady(adType: "interstitial" | "rewarded")` method to check if an ad of specific type is available. This method returns a promise which resolves with object of type `IsAdReadyResponse`.
+
+```typescript
+type IsAdReadyResponse = {
+  type: "interstitial" | "rewarded";
+  ready: boolean;
+};
+
+Pi.Ads.isAdReady(adType: AdType): Promise<IsAdReadyResponse>
+```
+
+The Pi Browser internally manages the ads availability strategy, automatically loading initial ads and reloading them whenever displayed. This ensures that ads are consistently ready for display. However, in rare cases, loading ads may be interrupted or the third party app may use `showAd()` methods too quickly (even before the next ad is ready). To address such cases, the Pi SDK provides this method to allow developers to check the availability of ads explicitly.
+
+### Request ad
+
+Use `requestAd(adType: "interstitial" | "rewarded")` method to request an interstitial or a rewarded ad. It returns a promise which resolves with an object of type `RequestAdResponse`:
+
+```typescript
+type RequestAdResponse = {
+  type: "interstitial" | "rewarded";
+  result: "AD_LOADED" | "AD_FAILED_TO_LOAD" | "AD_NOT_AVAILABLE";
+};
+
+Pi.Ads.requestAd(adType: AdType): Promise<RequestAdResponse>
+```
+
+As with the Ads availability strategy, the Pi Browser internally manages the process of requesting new ads to replace the displayed ones. While it's not guaranteed that an ad will be available at all time, developers can use `requestAd()` method to manually retry the ad request in case a promise returned by the `isAdReady()` resolved with `false`.
