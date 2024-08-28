@@ -178,7 +178,7 @@ GET /payments/incomplete_server_payments
 Verify status of a rewarded ad by `adId` returned by client Pi SDK method `displayAd('rewarded')`
 
 ```
-POST /ads_network/status/:adId
+GET /ads_network/status/:adId
 ```
 
 - Authorization method: **Server API Key**
