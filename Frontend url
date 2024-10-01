@@ -1,0 +1,8 @@
+process.env.MY_VARIABLE = 'my_value';
+console.log(process.env.MY_VARIABLE); // Outputs: my_value
+version: '3'
+services:
+  app:
+    environment:
+      - MY_VARIABLE=my_value
+console.log(process.env.MY_VARIABLE); // Outputs: my_value
