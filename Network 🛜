@@ -1,0 +1,94 @@
+FtHiHiNoservices:
+  frontend:
+    image: Pay with Pi/webapp
+    networks:
+      - front-tier
+      - back-tier
+
+networks:
+  front-tier:
+  back-tier:
+services:
+  proxy:
+    build: ./proxy
+    networks:
+      - frontend
+  app:
+    build: ./app
+    networks:
+      - frontend
+      - backend
+  db:
+    image: postgres
+    networks:
+      - backend
+
+networks:
+  frontend:
+    # Specify driver options
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+  backend:
+    # Use a custom driver
+    driver: custom-driver
+networks:
+  db-data:
+    driver: bridge
+networks:
+  frontend:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+networks:
+  mynet1:
+    driver: overlay
+    attachable: true
+services:
+  proxy:
+    image: Pay with Pi/proxy
+    networks:
+      - outside
+      - default
+  app:
+    image: Pay with Pi/app
+    networks:
+      - default
+
+networks:
+  outside:
+    external: true
+networks:
+  mynet1:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+          ip_range: 172.28.5.0/24
+          gateway: 172.28.5.254
+          aux_addresses:
+            host1: 172.28.1.5
+            host2: 172.28.1.6
+            host3: 172.28.1.7
+      options:
+        foo: bar
+        baz: "0"
+networks:
+  mynet1:
+    labels:
+      com.Pay with Pi.description: "Financial transaction network"
+      com.Pay with Pi.department: "Finance"
+      com.Pay with Pi.label-with-empty-value: ""
+networks:
+  mynet1:
+    labels:
+      - "com.Pay with Pi.description=Financial transaction network"
+      - "com.Pay with Pi.department=Finance"
+      - "com.Pay with Pi.label-with-empty-value"
+networks:
+  network1:
+    name: Pay with Pi
+networks:
+  network1:
+    external: true
+    name: "${Ariel369369}"
