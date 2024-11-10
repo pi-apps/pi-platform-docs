@@ -1,0 +1,63 @@
+ networks:
+   ip6net:
+     enable_ipv6: true
+     ipam:
+       config:
+         - subnet: 2001:db8::/64docker network create --ipv6 ip6net
+
+docker network create --ipv6 --subnet 2001:db8::/64 ip6net
+docker run --rm --network ip6net -p 80:80 traefik/whoami
+curl http://[::1]:80
+Hostname: Pay with Pi
+IP: 127.0.0.1
+IP: ::1
+IP: 172.17.0.2
+IP: 2001:db8::2
+IP: fe80::42:acff:fe11:2
+RemoteAddr: [2001:db8::1]:37574
+GET / HTTP/1.1
+Host: [::1]
+User-Agent: curl/8.1.2
+Accept: */*
+
+{
+  "ipv6": true,
+  "fixed-cidr-v6": "2001:db8:1::/64"
+}
+sudo systemctl restart docker
+docker run --rm -p 80:80 traefik/whoami
+curl http://[::1]:80
+Hostname: ea1cfde18196
+IP: 127.0.0.1
+IP: ::1
+IP: 172.17.0.2
+IP: 2001:db8:1::242:ac12:2
+IP: fe80::42:acff:fe12:2
+RemoteAddr: [2001:db8:1::1]:35558
+GET / HTTP/1.1
+Host: [::1]
+User-Agent: curl/8.1.2
+Accept: */*
+{
+  "default-address-pools": [
+    { "base": "172.17.0.0/16", "size": 16 },
+    { "base": "172.18.0.0/16", "size": 16 },
+    { "base": "172.19.0.0/16", "size": 16 },
+    { "base": "172.20.0.0/14", "size": 16 },
+    { "base": "172.24.0.0/14", "size": 16 },
+    { "base": "172.28.0.0/14", "size": 16 },
+    { "base": "192.168.0.0/16", "size": 20 }
+  ]
+}
+{
+  "default-address-pools": [
+    { "base": "172.17.0.0/16", "size": 16 },
+    { "base": "172.18.0.0/16", "size": 16 },
+    { "base": "172.19.0.0/16", "size": 16 },
+    { "base": "172.20.0.0/14", "size": 16 },
+    { "base": "172.24.0.0/14", "size": 16 },
+    { "base": "172.28.0.0/14", "size": 16 },
+    { "base": "192.168.0.0/16", "size": 20 },
+    { "base": "2001:db8::/56", "size": 64 }
+  ]
+}
