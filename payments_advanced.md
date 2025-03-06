@@ -49,4 +49,4 @@ wallets and assets. The APIs here are provided for as-is and with no guarantees.
 
 - **Better integration with the Pi ecosystem:** Using the A2U API enables the payment to be shown in the user's wallet as
 coming from your app, instead of looking like a random transaction from an unknown address. This can allow beautiful usr experiences in the future such
-as direct links backs to your app from the users' wallets or thumbnail icons displaying the goods the users purchased or returned durectly in their wallets. 
+as direct links backs to your app from the users' wallets or thumbnail icons displaying the goods the users purchased or returned directly in their wallets. 
