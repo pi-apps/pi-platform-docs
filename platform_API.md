@@ -1,3 +1,4 @@
+5a801148cc9c59e82f37ddc4e5b52c0997416f0a6247fa4d6468a83d9ac2acfcb54f0e0840958228a66729f6584d39b5397cdf5b2c9629f0f96782df19eb5abf
 # Platform API
 
 The platform API allows you to read and write data to the Pi Servers related with your app deployed on the
