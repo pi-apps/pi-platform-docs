@@ -11,7 +11,7 @@ This SDK is **not** for a server-side NodeJS app.
 ## Installation
 
 Add the following `script` tags to all pages where you need to call the Pi Apps SDK:
-
+You can view the full details of the issue "Frontend Javascript SDK" on the Pi Platform Docs repository by following this link: Issue #511
 ```html
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <script>Pi.init({ version: "2.0" })</script>
