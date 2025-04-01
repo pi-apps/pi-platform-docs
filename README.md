@@ -11,7 +11,7 @@ This SDK is **not** for a server-side NodeJS app.
 ## Installation
 
 Add the following `script` tags to all pages where you need to call the Pi Apps SDK:
-
+You can view the full details of the issue "Frontend Javascript SDK" on the Pi Platform Docs repository by following this link: Issue #511
 ```html
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <script>Pi.init({ version: "2.0" })</script>
@@ -63,6 +63,28 @@ Pi.createPayment({
   onReadyForServerCompletion: function(paymentId, txid) { /* ... */ },
   onCancel: function(paymentId) { /* ... */ },
   onError: function(error, payment) { /* ... */ },
+## Idea 1: Documentation
+
+* The repository contains a `README.md` file that provides a brief description of the project and some code snippets.
+* The repository also includes a `SECURITY.md` file that outlines the security policy and supported versions.
+* The `LICENSE` file contains the GNU Affero General Public License, which governs the use and distribution of the software.
+* The `.gitignore` file specifies which files and directories should be ignored by Git.
+* The `.github/workflows/blank.yml` and `.github/workflows/deno.yml` files define GitHub Actions workflows for the project.
+
+## Idea 2: Project structure
+
+* The repository includes a `pi_sbk.js` file that appears to contain JavaScript code related to the Pi SDK.
+* The `README.md` file provides some information about the project and includes a code snippet for signing in a user.
+* The `.github/workflows/blank.yml` and `.github/workflows/deno.yml` files define GitHub Actions workflows for the project.
+* The `.gitignore` file specifies which files and directories should be ignored by Git.
+* The `LICENSE` file contains the GNU Affero General Public License, which governs the use and distribution of the software.
+
+## Idea 3: GitHub Actions
+
+* The repository includes two GitHub Actions workflow files: `.github/workflows/blank.yml` and `.github/workflows/deno.yml`.
+* The `.github/workflows/blank.yml` file defines a basic workflow that runs on push or pull request events for the "main" branch and includes steps for checking out the repository and running some commands.
+* The `.github/workflows/deno.yml` file defines a workflow for setting up Deno, running a linter, and running tests.
+* Both workflow files are located in the `.github/workflows` directory.
 });
 
 ```
