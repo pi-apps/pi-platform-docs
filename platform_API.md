@@ -184,6 +184,53 @@ GET /ads_network/status/:adId
 - Authorization method: **Server API Key**
 - Response type: [RewardedAdStatusDTO](#RewardedAdStatusDTO)
 
+### Pi Ruby SDK Integration
+
+#### Initialize the SDK
+
+To initialize the Pi Ruby SDK, you need to provide your Pi API Key and the Private Seed of your app wallet.
+
+```ruby
+require 'pinetwork'
+# DO NOT expose these values to public
+api_key = "YOUR_PI_API_KEY"
+wallet_private_seed = "S_YOUR_WALLET_PRIVATE_SEED" # starts with S
+pi = PiNetwork.new(api_key: api_key, wallet_private_seed: wallet_private_seed)
+```
+
+#### Create an A2U payment
+
+To create an A2U payment, use the `create_payment` method. Make sure to store your payment data in your database.
+
+```ruby
+user_uid = "user_uid_of_your_app"
+payment_data = {
+  "amount": 3.14,
+  "memo": "Refund for apple pie",
+  "metadata": {"product_id": "apple-pie-1"}, # this is just an example
+  "uid": user_uid
+}
+# It is critical that you store the payment_id in your database
+# so that you don't double-pay the same user, by keeping track of the payment.
+payment_id = pi.create_payment(payment_data)
+```
+
+#### Submit the payment to the Pi Blockchain
+
+To submit the payment to the Pi Blockchain, use the `submit_payment` method. It is strongly recommended that you store the txid along with the payment_id you stored earlier for your reference.
+
+```ruby
+txid = pi.submit_payment(payment_id)
+```
+
+#### Complete the payment
+
+After checking the transaction with the txid you obtained, you must complete the payment using the `complete_payment` method. Upon completing, the method returns the payment object.
+
+```ruby
+payment = pi.complete_payment(payment_id, txid)
+```
+
 ## Resource types
 
 ### `UserDTO`
