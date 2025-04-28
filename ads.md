@@ -207,3 +207,39 @@ const showRewardedAd = async () => {
   }
 };
 ```
+
+## Best Practices for Displaying Interstitial Ads
+
+1. **Natural Transition Points**: Display interstitial ads at natural transition points in your app, such as between levels in a game or between different sections of content. This minimizes disruption to the user experience.
+
+2. **Frequency**: Avoid displaying interstitial ads too frequently. This can lead to user frustration and may result in users abandoning your app. A good rule of thumb is to show interstitial ads no more than once every few minutes of active use.
+
+3. **Relevance**: Ensure that the ads displayed are relevant to your users. Irrelevant ads can lead to a poor user experience and may reduce the effectiveness of your ad placements.
+
+4. **Load Time**: Preload interstitial ads to ensure they are ready to display when needed. This helps to avoid delays and keeps the user experience smooth.
+
+5. **Clear Close Option**: Provide a clear and easily accessible option for users to close the interstitial ad. This helps to maintain a positive user experience and reduces frustration.
+
+## Best Practices for Displaying Rewarded Ads
+
+1. **Value Exchange**: Clearly communicate the value exchange to users. Let them know what reward they will receive in exchange for watching the ad. This helps to increase user engagement and satisfaction.
+
+2. **Placement**: Place rewarded ads at points in your app where users are likely to be motivated to earn rewards, such as when they run out of lives in a game or need extra resources to continue.
+
+3. **Frequency**: Avoid overwhelming users with too many rewarded ads. Offer them at strategic points where the reward will be most valuable to the user.
+
+4. **User Control**: Allow users to choose whether or not to watch a rewarded ad. Forcing users to watch ads can lead to a negative experience and may result in users abandoning your app.
+
+5. **Reward Delivery**: Ensure that rewards are delivered promptly and reliably after the user watches the ad. This helps to build trust and encourages users to engage with rewarded ads in the future.
+
+## How to Apply for the Developer Ad Network
+
+1. **Access the Developer Portal**: Open the Pi Browser and navigate to the Pi Developer Portal at `pi://develop.pi`.
+
+2. **Register Your App**: If you haven't already, register your app on the Developer Portal by following the instructions provided in the [Developer Portal documentation](developer_portal.md).
+
+3. **Submit an Application**: Once your app is registered, navigate to the Ads section of the Developer Portal and submit an application to join the Developer Ad Network. Provide all required information and details about your app.
+
+4. **Review Process**: Your application will be reviewed by the Pi Core Team. This process may take some time, so please be patient.
+
+5. **Approval and Integration**: If your application is approved, you will receive instructions on how to integrate the Developer Ad Network into your app. Follow these instructions carefully to start displaying monetized ads in your app.

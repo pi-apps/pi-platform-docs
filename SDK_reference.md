@@ -349,3 +349,27 @@ Pi.Ads.requestAd(adType: AdType): Promise<RequestAdResponse>
 ```
 
 As with the Ads availability strategy, the Pi Browser internally manages the process of requesting new ads to replace the displayed ones. While it's not guaranteed that an ad will be available at all time, developers can use `requestAd()` method to manually retry the ad request in case a promise returned by the `isAdReady()` resolved with `false`.
+
+## Handling SDK Errors and Exceptions
+
+When using the Pi SDK, it's important to handle errors and exceptions gracefully. Here are some best practices:
+
+1. **Error Logging**: Log all SDK-related errors for debugging and analysis. This helps in identifying recurring issues and improving the SDK integration.
+
+2. **User Notification**: Inform users about errors and provide clear instructions on how to proceed. This helps in maintaining a positive user experience.
+
+3. **Retry Mechanism**: Implement a retry mechanism for transient errors, such as network issues or temporary server unavailability. Use exponential backoff to avoid overwhelming the server with repeated requests.
+
+4. **Fallback Options**: Provide fallback options for users in case of persistent errors. For example, allow users to retry the operation manually or offer alternative solutions.
+
+## Handling SDK Updates and Compatibility
+
+To handle SDK updates and ensure compatibility, you can use the following strategies:
+
+1. **Versioning Strategy**: Follow a versioning strategy for the SDK. Use version numbers in the SDK initialization to indicate different versions. For example, use `Pi.init({ version: "2.0" })` for version 2.0.
+
+2. **Backward Compatibility**: Ensure backward compatibility when introducing new versions of the SDK. Avoid making breaking changes that could disrupt existing integrations. If breaking changes are necessary, provide clear documentation and migration guides for developers to update their implementations.
+
+3. **Deprecation Policy**: Establish a deprecation policy for older versions of the SDK. Communicate the deprecation timeline to developers and provide sufficient time for them to migrate to newer versions. Clearly mark deprecated features and provide alternative solutions in the documentation.
+
+4. **Documentation and Release Notes**: Maintain comprehensive documentation for each version of the SDK. Include release notes that highlight the changes, new features, and bug fixes in each version. This helps developers understand the updates and make necessary adjustments to their implementations.

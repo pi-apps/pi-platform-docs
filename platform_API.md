@@ -184,6 +184,30 @@ GET /ads_network/status/:adId
 - Authorization method: **Server API Key**
 - Response type: [RewardedAdStatusDTO](#RewardedAdStatusDTO)
 
+### Handling Rate Limiting and Retries
+
+To handle rate limiting and retries, you can use the following strategies:
+
+1. **Rate Limiting Headers**: Pay attention to the rate limiting headers returned by the API. These headers provide information about the rate limits and the remaining quota. Use this information to adjust your request rate accordingly.
+
+2. **Exponential Backoff**: Implement an exponential backoff strategy for retries. If a request fails due to rate limiting, wait for a certain period before retrying. Increase the wait time exponentially with each subsequent retry to avoid overwhelming the server.
+
+3. **Retry-After Header**: If the API returns a `Retry-After` header, respect the value provided in the header. This header indicates the amount of time to wait before making another request.
+
+4. **Error Handling**: Implement proper error handling for rate limiting errors. When a rate limiting error occurs, log the error and provide appropriate feedback to the user.
+
+### Handling API Versioning and Updates
+
+To handle API versioning and updates, you can use the following strategies:
+
+1. **Versioning Strategy**: Follow a versioning strategy for your API. Use version numbers in the API endpoints to indicate different versions. For example, use `/v1/resource` for version 1 and `/v2/resource` for version 2.
+
+2. **Backward Compatibility**: Ensure backward compatibility when introducing new versions of the API. Avoid making breaking changes that could disrupt existing clients. If breaking changes are necessary, provide clear documentation and migration guides for clients to update their implementations.
+
+3. **Deprecation Policy**: Establish a deprecation policy for older versions of the API. Communicate the deprecation timeline to clients and provide sufficient time for them to migrate to newer versions. Clearly mark deprecated endpoints and provide alternative endpoints in the documentation.
+
+4. **Documentation and Release Notes**: Maintain comprehensive documentation for each version of the API. Include release notes that highlight the changes, new features, and bug fixes in each version. This helps clients understand the updates and make necessary adjustments to their implementations.
+
 ## Resource types
 
 ### `UserDTO`
@@ -220,18 +244,18 @@ GET /ads_network/status/:adId
 
   // Status flags representing the current state of this payment
   status: {
-    developer_approved: boolean, // Server-Side Approval
-    transaction_verified: boolean, // blockchain transaction verified
-    developer_completed: boolean, // Server-Side Completion
-    cancelled: boolean, // cancelled by the developer or by Pi Network
-    user_cancelled: boolean, // cancelled by the user
+    developer_approved: boolean; // Server-Side Approval
+    transaction_verified: boolean; // blockchain transaction verified
+    developer_completed: boolean; // Server-Side Completion
+    cancelled: boolean; // cancelled by the developer or by Pi Network
+    user_cancelled: boolean; // cancelled by the user
   },
 
   // Blockchain transaction data:
   transaction: null | { // This is null if no transaction has been made yet
-    txid: string, // id of the blockchain transaction
-    verified: boolean, // true if the transaction matches the payment, false otherwise
-    _link: string, // a link to the operation on the Blockchain API
+    txid: string; // id of the blockchain transaction
+    verified: boolean; // true if the transaction matches the payment, false otherwise
+    _link: string; // a link to the operation on the Blockchain API
   },
 };
 ```

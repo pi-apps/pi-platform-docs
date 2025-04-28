@@ -7,6 +7,26 @@ develop.pi in the Pi Browser to access the Developer Portal).
 
 This SDK is **not** for a server-side NodeJS app.
 
+## Repository Overview
+
+This repository contains documentation for the Pi App Platform. It provides guides and references for integrating various features into Pi Apps, including authentication, payments, ads, and more.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Authenticate a user](#authenticate-a-user)
+  - [Request a payment (User-To-App)](#request-a-payment-user-to-app)
+  - [Request a payment (App-To-User)](#request-a-payment-app-to-user)
+- [Contributing](#contributing)
+- [Additional Documentation](#additional-documentation)
+  - [Payments](./payments.md)
+  - [Advanced Payments](./payments_advanced.md)
+  - [Platform API](./platform_API.md)
+  - [Client SDK](./SDK_reference.md)
+  - [Ads](./ads.md)
+  - [Authentication](./authentication.md)
+  - [Developer Portal](./developer_portal.md)
 
 ## Installation
 
@@ -85,3 +105,15 @@ Please refer to:
   server
 * [the client SDK documentation](./SDK_reference.md) to learn about Pi Apps SDK and provided methods in detail
 * [the Demo App](https://github.com/pi-apps/demo) to view an example of how you can implement the various required flows in your app's code
+
+## Contributing
+
+We welcome contributions to this repository. If you would like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Make your changes and commit them with clear and concise messages.
+4. Push your changes to your forked repository.
+5. Create a pull request to the main repository.
+
+Please ensure that your code follows the existing style and conventions, and that you have tested your changes thoroughly before submitting a pull request.
