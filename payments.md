@@ -78,3 +78,29 @@ This diagram shows the same payment flow from your app's point of view in a simp
 4. The Pi browser shows the payment detail page to a user, and we are waiting until the user signs the transaction
 5. A callback function that gets called automatically by the Pi SDK (letting your App Server know that it needs to make an complete API request)
 6. An API request from your App Server to the Pi Server to complete the payment (letting the Pi Server know that you completed this payment)
+
+## Handling Payment Cancellations
+
+To handle payment cancellations, you can use the following steps:
+
+1. **Cancel Payment API**: Use the `/payments/{payment_id}/cancel` API endpoint to mark a payment as cancelled. This can be done from your server when a user requests a cancellation.
+
+2. **User Notification**: Inform users about the cancellation and provide clear instructions on how to proceed. This helps in maintaining a positive user experience.
+
+3. **Refund Process**: If the payment was already processed, initiate a refund process to return the funds to the user. Ensure that the refund process is prompt and reliable.
+
+4. **Update App State**: Update your app's state to reflect the cancellation. This may include updating the user interface and any relevant data in your app's backend.
+
+## Handling Partial Payments
+
+To handle partial payments, you can use the following steps:
+
+1. **Track Payment Progress**: Keep track of the payment progress and the amount paid by the user. This can be done by storing the payment details in your app's backend.
+
+2. **Notify User**: Inform the user about the partial payment and the remaining amount to be paid. Provide clear instructions on how to complete the payment.
+
+3. **Allow Partial Payment Completion**: Allow users to complete the partial payment by making additional payments. Use the Pi SDK to create new payment requests for the remaining amount.
+
+4. **Update App State**: Update your app's state to reflect the partial payment and the remaining amount. This may include updating the user interface and any relevant data in your app's backend.
+
+5. **Handle Incomplete Payments**: If a payment remains incomplete for an extended period, consider implementing a timeout or expiration mechanism. Notify the user and provide options to either complete the payment or cancel it.

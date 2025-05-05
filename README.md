@@ -7,6 +7,27 @@ develop.pi in the Pi Browser to access the Developer Portal).
 
 This SDK is **not** for a server-side NodeJS app.
 
+## Description
+
+This repository contains documentation for the Pi App Platform. Here are some key points about the repository:
+
+* The repository provides documentation for integrating ads into Pi Apps, including interstitial and rewarded ads. Refer to `ads.md` for more details.
+* It includes a guide on handling user authentication using the Pi SDK and API endpoint. See `authentication.md` for more information.
+* The Pi Developer Portal is explained in `developer_portal.md`, which guides developers on registering and configuring their apps to connect to the Pi Blockchain.
+* Advanced payment features, such as App-To-User (A2U) payments, are covered in `payments_advanced.md`.
+* The basic payment flow, including User-To-App (U2A) payments, is detailed in `payments.md`.
+* The Platform API documentation, including authentication and payment-related endpoints, is available in `platform_API.md`.
+* The repository also includes a README file, `README.md`, which provides an overview of the Pi SDK and its usage.
+* Detailed reference for the client SDK, including initialization, authentication, payments, and ads, can be found in `SDK_reference.md`.
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Authenticate a user](#authenticate-a-user)
+  - [Request a payment (User-To-App)](#request-a-payment-user-to-app)
+  - [Request a payment (App-To-User)](#request-a-payment-app-to-user)
+- [Contributing](#contributing)
 
 ## Installation
 
@@ -85,3 +106,15 @@ Please refer to:
   server
 * [the client SDK documentation](./SDK_reference.md) to learn about Pi Apps SDK and provided methods in detail
 * [the Demo App](https://github.com/pi-apps/demo) to view an example of how you can implement the various required flows in your app's code
+
+## Contributing
+
+We welcome contributions to this repository. If you would like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Make your changes and commit them with clear and concise commit messages.
+4. Push your changes to your forked repository.
+5. Create a pull request to the main repository, explaining your changes and why they should be merged.
+
+Please ensure that your contributions adhere to the coding standards and guidelines of the project. If you have any questions or need further assistance, feel free to open an issue or contact the maintainers.

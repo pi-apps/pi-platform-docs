@@ -89,3 +89,21 @@ Projects that existed prior to the launch of the Pi Mainnet SDK will point to th
     - Select “Pi Mainnet SDK Wallet”
     - Submit contact information
     - A member of the Pi CT will follow up
+
+## How to update app information in the Developer Portal
+
+1. Access the Developer Portal: Open the Pi Browser and navigate to the Pi Developer Portal at `pi://develop.pi`.
+
+2. Select Your App: From the main page, select the app you want to update.
+
+3. Edit App Information: Click on the "Edit" button next to the app information you want to update. Make the necessary changes and save them.
+
+4. Review and Confirm: Review the updated information and confirm the changes.
+
+## How to delete an app from the Developer Portal
+
+1. Access the Developer Portal: Open the Pi Browser and navigate to the Pi Developer Portal at `pi://develop.pi`.
+
+2. Select Your App: From the main page, select the app you want to delete.
+
+3. Delete the App: Click on the "Delete" button. Confirm the deletion when prompted. Note that this action is irreversible.
