@@ -15,7 +15,7 @@ Here's a list of Pi Backend SDKs for each language (or runtime) you can use for 
 | Python | TBD | Community-maintained |
 | PHP | TBD | Community-maintained |
 
-Community maintainers for other programming languages are more than welcome, please submit a PR in the [PiOS repository](https://github.com/pi-apps/PiOS) if youare interested to maintain a Pi SDK.
+Community maintainers for other programming languages are more than welcome, please submit a PR in the [PiOS repository](https://github.com/pi-apps/PiOS) if you are interested to maintain a Pi SDK.
 
 
 ## Supported features
@@ -49,4 +49,4 @@ wallets and assets. The APIs here are provided for as-is and with no guarantees.
 
 - **Better integration with the Pi ecosystem:** Using the A2U API enables the payment to be shown in the user's wallet as
 coming from your app, instead of looking like a random transaction from an unknown address. This can allow beautiful usr experiences in the future such
-as direct links backs to your app from the users' wallets or thumbnail icons displaying the goods the users purchased or returned durectly in their wallets. 
+as direct links backs to your app from the users' wallets or thumbnail icons displaying the goods the users purchased or returned directly in their wallets. 
