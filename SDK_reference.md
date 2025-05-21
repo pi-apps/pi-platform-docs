@@ -349,3 +349,19 @@ Pi.Ads.requestAd(adType: AdType): Promise<RequestAdResponse>
 ```
 
 As with the Ads availability strategy, the Pi Browser internally manages the process of requesting new ads to replace the displayed ones. While it's not guaranteed that an ad will be available at all time, developers can use `requestAd()` method to manually retry the ad request in case a promise returned by the `isAdReady()` resolved with `false`.
+
+## Open URL in system browser
+
+Open a URL in system browser instead of Pi Browser.
+
+```typescript
+Pi.openUrlInSystemBrowser(url: string): Promise<void>
+```
+
+The method returns a Promise which resolves when the URL is successfully opened and rejects with an `Error` if something went wrong. Possible error messages are:
+
+- `"Failed to open URL"` indicates that the URL could not be opened by system browser likely due to the incorrect URL,
+- `"No minimal requirements"` indicates that the end-user has an older version of Pi Browser that doesn't support this SDK method,
+- `"Unexpected error"`
+
+Based on the error messages, you can handle each error case differently in your application. However, it is highly advised you encourage your users to update the Pi Browser if you receive `"No minimal requirements"` error.
