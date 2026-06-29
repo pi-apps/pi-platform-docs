@@ -63,6 +63,7 @@ type AuthResult = {
 
 Available scopes: `username`, `payments`, `wallet_address`
 
+<br />
 Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
 to be present:
 
@@ -73,6 +74,16 @@ to be present:
 |       `payments` | Required if your app needs to make payments between your app and the users                                                                                      |    `payments`    |
 | `wallet_address` | The wallet address of the user who authenticates on your app.                                                                                                   | `wallet_address` |
 
+<br />
+
+Here is a breakdown of scopes that do not add fields to `AuthResult['user']`, and the methods/flows that require them:
+
+| Scope         | Description    | Methods Requiring Scope  |
+| -------------: | ------------- | :-------------: |
+| `payments`      | Gives permission to the app to create payments on the users behalf. This scope does not add any fields to `AuthResult['user']`. | `createPayment` |
+| `wallet_address` | Allows app-to-user payment flows that require the user's public wallet address. This value is not returned on `AuthResult['user']` by `authenticate`. | `createPayment` - App to User Payments |
+
+<br />
 ### `onIncompletePaymentFound`
 
 Signature: `(payment: PaymentDTO) => void`
