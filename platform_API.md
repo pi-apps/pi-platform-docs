@@ -184,6 +184,95 @@ GET /ads_network/status/:adId
 - Authorization method: **Server API Key**
 - Response type: [RewardedAdStatusDTO](#RewardedAdStatusDTO)
 
+
+### In-app notifications
+
+In-app notifications let your server send notifications to users of your app.
+Users will receive these notifications in the **Notification Center** screen inside the **Pi App**
+
+> **Important: server-side only**
+>
+> This endpoint requires your **Server API Key**, so it must be called from your backend (do not call it directly from the client).
+>
+> In order for a user to receive in-app notifications from your app, your app must request the `in_app_notifications` scope using the Client SDK authentication flow (see [Client SDK: Authentication](./SDK_reference.md#authentication)).
+
+#### Send notifications to users
+
+Send one or more notifications to app users.
+
+```
+POST /v2/in_app_notifications/notify
+```
+
+- Authorization method: **Server API Key**
+- Response type: `Object`
+
+##### Limits
+
+- Maximum **256** notifications per request.
+- A given user may receive up to **48** notifications per **24 hours** from your app.
+
+##### Request body
+
+- `notifications` (array, required): list of notifications to send.
+  - `title` (string, required): notification title.
+  - `body` (string, required): notification body text.
+  - `user_uid` (string, required): the recipient user id for your app.
+  - `subroute` (string, required): a route within your app that the notification should open. Must start with `/`.
+
+##### Example request body
+
+```json
+{
+  "notifications": [
+    {
+      "title": "Test Notification",
+      "body": "This is a test notification",
+      "user_uid": "my-app-user-1111111-22222222-33333333",
+      "subroute": "/shop"
+    }
+  ]
+}
+```
+
+##### Example successful response
+
+Note: Delivery is best-effort per user. Some notifications in the batch may not be delivered if the recipient has not granted consent for in-app notifications or has disabled them in the Pi App. In those cases, the corresponding items will not appear in `delivered_notifications`.
+
+```json
+{
+  "success": true,
+  "delivered_notifications": [
+    {
+      "id": "string",
+      "title": "Test Notification",
+      "body": "This is a test notification",
+      "user_uid": "my-app-user-111111-222222-333333",
+      "subroute": "/shop",
+      "seen_at": null,
+      "dismissed_at": null
+    }
+  ]
+}
+```
+
+##### Errors
+
+Error responses use the following format:
+
+```json
+{ "error": "string" }
+```
+
+##### Statuses
+
+- `201 Created`: notifications delivered (see example response above).
+- `400 Bad Request`: too many notifications in a single request (more than 256). Example message: `"Maximum 256 notifications allowed per request"`.
+- `403 Forbidden`: notification quota exceeded for one or more users. Example message: `"Notification quota exceeded for users: <uid1>, <uid2>"`.
+- `422 Unprocessable Entity`: missing required parameters or invalid notification payload.
+- `500 Internal Server Error`: unexpected server error.
+
+
 ## Resource types
 
 ### `UserDTO`

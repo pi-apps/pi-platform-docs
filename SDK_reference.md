@@ -61,7 +61,7 @@ type AuthResult = {
 
 ### `scopes`
 
-Available scopes: `username`, `payments`, `wallet_address`
+Available scopes: `username`, `payments`, `wallet_address`, `in_app_notifications`
 
 Here is a breakdown of various keys available on the `AuthResult['user']` object, and the scopes required for those keys
 to be present:
